@@ -19,8 +19,8 @@ Every system component in the application, with its owning crate/technology, res
 | Component | Crate / Technology | Responsibility | Phase |
 |-----------|-------------------|----------------|-------|
 | **EntitlementService** | `jsonwebtoken`, `security-framework` | Offline JWT validation with embedded RSA public key, macOS Keychain read/write for API keys and secure timestamps, clock rollback detection, tier gating (Free/Paid/One-Time). | 3 |
-| **DatabaseLayer** | `rusqlite` (bundled) | Single SQLite connection behind `tokio::sync::Mutex`, WAL mode, migration runner, all CRUD operations for User, Conversation, Message, KnowledgeBase, KnowledgeFile, KnowledgeChunk, McpServer, UserSkill, GraphNode, GraphEdge, EntitlementLease, AppSettings tables. | 2 |
-| **VectorStore** | `lancedb` | Embedded vector storage and similarity search. Manages Lance-format tables on disk. IVF-PQ index for ANN queries. Linked to KnowledgeChunk rows via `embedding_id`. | 2 |
+| **DatabaseLayer** | `rusqlite` (bundled) | Single SQLite connection behind `tokio::sync::Mutex`, WAL mode, migration runner, all CRUD operations for User, Conversation, Message, **KnowledgeBase** (with `acceptedTypes` JSON column for text/document/image/video/audio/pdf/ppt/excel), KnowledgeFile (scoped to a single KB), KnowledgeChunk (scoped to a single KB), Memory (with a `kb` category for KB public-surface references), McpServer, UserSkill, GraphNode, GraphEdge, EntitlementLease, AppSettings tables. | 2 |
+| **VectorStore** | `lancedb` | Embedded vector storage and similarity search. Manages **per-KB** Lance-format tables on disk (one table per Knowledgebase, never shared across KBs). IVF-PQ index for ANN queries. Linked to KnowledgeChunk rows via `embedding_id`. **All queries are scoped to a single KB at the IPC layer.** | 2 |
 | **GraphEngine** | `rusqlite` (recursive CTEs) | Property graph operations on `graph_node` and `graph_edge` tables. Recursive CTE queries for 1–3 hop traversals. Entity extraction orchestration. | 2 |
 | **McpClientRouter** | `tokio::process`, `reqwest` | Manages connections to MCP servers. Supports stdio transport (spawn child process, JSON-RPC over stdin/stdout) and HTTP transport (JSON-RPC over HTTP). Routes tool invocations from the agent runtime to the correct server. | 4 |
 | **SkillSandbox** | WKWebView iframe (Phase 1), `wasmtime` (Phase 2) | Executes user-imported skill scripts in a capability-restricted environment. Phase 1: CSP-locked WKWebView iframe with `postMessage` bridge. Phase 2: Wasmtime engine with explicit capability grants. | 1 (Phase 1), 2 (Phase 2) |
@@ -73,16 +73,21 @@ Each of the 12 core features mapped to its primary and secondary components, IPC
 | **Sidecar Required** | Yes — Pi SDK (Node.js) for agent loop; llama-server for local model inference |
 | **Data Flow** | User types message → `chat_send_message` IPC → Rust validates entitlement → PiSdkBridge sends JSON-RPC to Pi SDK sidecar → Pi SDK orchestrates tool calls and LLM requests → streaming tokens emitted via Tauri events → Svelte renders incrementally → final response persisted to Message table |
 
-### F2: Knowledge Base Management (File Import, Chunking, Embedding, RAG)
+### F2: Knowledgebase Management (File Import, Chunking, Embedding, RAG)
+
+> **Note on naming:** "Knowledgebase" (KB) is the canonical term in code, IPC commands, and the SQLite schema. The user-facing surface is the **Library** (`view-knowledge`), which hosts two sub-tabs: **Knowledgebases** (the list of self-contained RAGs) and **Files** (the artifact catalog). Each KB is fully isolated from other KBs and from the app's long-term memory — the agent's `Memory` and `GraphNode` tables only ever see a KB's **name + summary** (the public surface); full source contents stay inside the KB.
+>
+> **Supported input types per KB:** `text, document, image, video, audio, pdf, ppt, excel` (validated against the KB's `acceptedTypes` column before import).
 
 | Attribute | Value |
 |-----------|-------|
-| **Primary Components** | DatabaseLayer, VectorStore |
+| **Primary Components** | DatabaseLayer, VectorStore (LanceDB), MemoryStore (for KB public-surface mirroring) |
 | **Secondary Components** | PiSdkBridge (for embedding model calls) |
-| **IPC Commands** | `kb_create`, `kb_import_file`, `kb_list`, `kb_delete`, `kb_get_chunks`, `kb_search_rag`, `kb_reindex` |
-| **Data Tables** | KnowledgeBase, KnowledgeFile, KnowledgeChunk |
+| **IPC Commands** | `kb_create`, `kb_import_file`, `kb_list`, `kb_delete`, `kb_delete_file`, `kb_get_chunks`, `kb_search_rag`, `kb_update`, `kb_reindex` |
+| **Data Tables** | **KnowledgeBase** (with `acceptedTypes` JSON column, public `name` + `summary`, private `sourceCount` / `chunkCount` / `vectorCount`), **KnowledgeFile** (scoped to a single KB), **KnowledgeChunk** (scoped to a single KB; LanceDB vectors indexed per-KB) |
+| **Memory table interaction** | On `kb_create` → auto-insert a row into `Memory` with `category: 'kb'` and content `"Knowledgebase \"<name>\" is available — <summary>"`. On `kb_delete` → delete that memory row. This is the only way a KB is exposed to the agent's long-term context. |
 | **Sidecar Required** | Optional — llama-server if using local embedding model |
-| **Data Flow** | User drops file → `kb_import_file` IPC → Rust reads file, chunks text (512 tokens, 50-token overlap) → generates embeddings via local model or cloud API → stores chunks in KnowledgeChunk table → inserts vectors into LanceDB table → links via `embedding_id` |
+| **Data Flow** | User opens Library > Knowledgebases > "Add Knowledgebase" dialog → `kb_create` IPC (name, summary, acceptedTypes) → KB row inserted + auto-memory row created → grid re-renders. User clicks KB card → (future detail view) drops file onto drop zone → `kb_import_file` IPC → Rust reads file → validates MIME type against `acceptedTypes` → chunks text (512 tokens, 50-token overlap) → generates embeddings via local model or cloud API → stores chunks in `KnowledgeChunk` (scoped to this KB) → inserts vectors into a per-KB LanceDB table → links via `embedding_id` → emits `embedding-progress` events. |
 
 ### F3: Knowledge Graph (Entity Extraction, Graph Visualization)
 
@@ -234,7 +239,7 @@ sequenceDiagram
     UI->>UI: Finalize message render, enable input
 ```
 
-### 4.2 Knowledge Base Import Pipeline (F2)
+### 4.2 Knowledgebase Import Pipeline (F2)
 
 ```mermaid
 sequenceDiagram
@@ -462,8 +467,10 @@ sequenceDiagram
         Rust->>SQLite: INSERT Conversation + Messages
         Rust-->>UI: Tauri event: "migration-progress" { percent }
     end
-    loop Each Knowledge Item
+    loop Each Knowledgebase
         Rust->>SQLite: INSERT KnowledgeBase + Files + Chunks
+        Rust->>SQLite: INSERT Memory (category=kb, content="Knowledgebase \"<name>\" is available — <summary>")
+    end
         Rust->>Lance: Generate and insert embeddings
         Rust-->>UI: Tauri event: "migration-progress" { percent }
     end
@@ -525,17 +532,22 @@ All `#[tauri::command]` functions exposed by the Rust backend, organized by doma
 | `chat_branch` | `conversation_id: String, message_id: String` | `Result<String, AppError>` | Both IDs are UUID format | No | `Database`, `NotFound` |
 | `chat_compact_history` | `conversation_id: String` | `Result<CompactionSummary, AppError>` | conversation_id is UUID format | Yes | `Database`, `SidecarUnavailable` |
 
-### 5.2 Knowledge Base Commands (`kb_*`)
+### 5.2 Knowledgebase Commands (`kb_*`)
+
+> **Memory isolation contract:** every `kb_*` command in this table is scoped to a single KB. The agent's long-term memory (Memories surface, Knowledge Graph) never receives KB source contents — it only ever sees a KB's `name` + `summary`. Full source contents are private to the KB and only appear in active chat context when the KB is explicitly linked via the `chat_knowledge_base` junction (see F1). On `kb_create` / `kb_delete`, the corresponding `category: 'kb'` memory row is auto-inserted / removed.
 
 | Command | Parameters | Return | Validation | Async | Errors |
 |---------|-----------|--------|-----------|-------|--------|
-| `kb_create` | `name: String` | `Result<String, AppError>` | name length 1–200 chars | No | `Database` |
-| `kb_import_file` | `kb_id: String, file_path: String` | `Result<ImportResult, AppError>` | file_path canonicalized and within accessible dirs; file exists; extension in allowed set (.pdf, .txt, .md, .docx) | Yes | `Io`, `UnsupportedFormat`, `Database` |
+| `kb_create` | `name: String, summary: String, accepted_types: Vec<String>` | `Result<String, AppError>` | name 1–200 chars; summary 1–500 chars; `accepted_types` is a non-empty subset of `{text, document, image, video, audio, pdf, ppt, excel}` | No | `Validation`, `Database` |
+| `kb_import_file` | `kb_id: String, file_path: String` | `Result<ImportResult, AppError>` | file_path canonicalized and within accessible dirs; file exists; MIME type is in the KB's `accepted_types` (text/document/image/video/audio/pdf/ppt/excel) | Yes | `Io`, `UnsupportedFormat`, `Validation`, `Database` |
 | `kb_list` | — | `Result<Vec<KnowledgeBase>, AppError>` | — | No | `Database` |
-| `kb_delete` | `kb_id: String` | `Result<(), AppError>` | kb_id is UUID format | No | `Database`, `NotFound` |
-| `kb_get_chunks` | `kb_id: String, file_id: Option<String>, limit: u32, offset: u32` | `Result<Vec<KnowledgeChunk>, AppError>` | limit ≤ 500 | No | `Database` |
-| `kb_search_rag` | `query: String, kb_id: String, top_k: u32` | `Result<Vec<RagResult>, AppError>` | query length ≤ 2,000 chars; top_k ≤ 50 | Yes | `Database`, `VectorStoreUnavailable` |
-| `kb_reindex` | `kb_id: String` | `Result<ReindexResult, AppError>` | kb_id is UUID format | Yes | `Database`, `SidecarUnavailable` |
+| `kb_get` | `kb_id: String` | `Result<KnowledgeBase, AppError>` | kb_id is UUID format | No | `Database`, `NotFound` |
+| `kb_update` | `kb_id: String, name: Option<String>, summary: Option<String>, accepted_types: Option<Vec<String>>` | `Result<(), AppError>` | name/summary length; `accepted_types` is a non-empty subset of the supported types | No | `Validation`, `Database`, `NotFound` |
+| `kb_delete` | `kb_id: String` | `Result<(), AppError>` | kb_id is UUID format; CASCADE deletes files + chunks; drops per-KB LanceDB table; removes the local KB directory; deletes the auto-generated `category: 'kb'` memory row | No | `Database`, `NotFound` |
+| `kb_delete_file` | `kb_id: String, file_id: String` | `Result<(), AppError>` | CASCADE deletes chunks; drops the file's vectors from the per-KB LanceDB table | No | `Database`, `NotFound` |
+| `kb_get_chunks` | `kb_id: String, file_id: Option<String>, limit: u32, offset: u32` | `Result<Vec<KnowledgeChunk>, AppError>` | limit ≤ 500; scoped to a single KB | No | `Database`, `NotFound` |
+| `kb_search_rag` | `query: String, kb_id: String, top_k: u32` | `Result<Vec<RagResult>, AppError>` | query length ≤ 2,000 chars; top_k ≤ 50; always scoped to one KB | Yes | `Database`, `NotFound`, `VectorStoreUnavailable` |
+| `kb_reindex` | `kb_id: String` | `Result<ReindexResult, AppError>` | kb_id is UUID format; rebuilds the per-KB LanceDB index | Yes | `Database`, `NotFound`, `SidecarUnavailable` |
 
 ### 5.3 Knowledge Graph Commands (`graph_*`)
 
@@ -1083,9 +1095,21 @@ CREATE INDEX idx_message_parent ON message(parent_message_id);
 CREATE TABLE IF NOT EXISTS knowledge_base (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL REFERENCES user(id),
-    name TEXT NOT NULL,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    name TEXT NOT NULL,                          -- Public: surfaced to Memories + Knowledge Graph
+    summary TEXT NOT NULL,                       -- Public: one-line description visible to the agent
+    accepted_types TEXT NOT NULL,                -- JSON array subset of {text, document, image, video, audio, pdf, ppt, excel}
+    source_count INTEGER NOT NULL DEFAULT 0,     -- Private: internal to the KB
+    chunk_count INTEGER NOT NULL DEFAULT 0,      -- Private: internal to the KB
+    vector_count INTEGER NOT NULL DEFAULT 0,     -- Private: internal to the KB
+    size_bytes INTEGER NOT NULL DEFAULT 0,       -- Private: total bytes of all source files
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+-- Note: the agent's long-term memory only ever sees `name` + `summary` from this table.
+-- On INSERT, a corresponding `memory` row is auto-created with `category = 'kb'` and
+-- content 'Knowledgebase "<name>" is available — <summary>'. On DELETE, that memory
+-- row is removed. Source contents live in knowledge_file + knowledge_chunk + LanceDB
+-- and are scoped exclusively to this KB.
 
 CREATE TABLE IF NOT EXISTS knowledge_file (
     id TEXT PRIMARY KEY,

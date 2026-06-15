@@ -246,35 +246,42 @@
 
 ---
 
-## 7. Library (formerly Knowledge Base) (13 features)
+## 7. Library (Knowledgebases + Files) (16 features)
+
+> **Naming**: The Library is a single file-directory surface with two sub-tabs: **Knowledgebases** (self-contained RAGs the user creates) and **Files** (AI-generated artifacts + uploaded assets). The standalone "Knowledge Base" page is gone. Each Knowledgebase is isolated from other KBs and from the app's long-term memory; the agent's memories and knowledge graph only see the KB's **name + summary** (the public surface).
+>
+> Supported KB input types: **text, document, image, video, audio, pdf, ppt, excel**.
 
 | # | Feature | Verdict | Web Dependency | Desktop Adaptation |
 |---|---------|---------|----------------|--------------------|
-| 7.1 | Knowledge Base CRUD | **ADAPT** | Convex mutations | IPC commands → SQLite `KnowledgeBase` table. |
-| 7.2 | Knowledge Base Listing | **ADAPT** | Convex query | IPC `kb_list` → SQLite SELECT. |
-| 7.3 | KB File Upload | **ADAPT** | Convex generateUploadURL | Files copied/linked to `Application Support/AskDexter/knowledge/` on local disk. No upload URL needed. |
+| 7.1 | Knowledgebase CRUD | **ADAPT** | Convex mutations | IPC commands → SQLite `KnowledgeBase` table. Captures `name` + `summary` (public) and `acceptedTypes` (text/document/image/video/audio/pdf/ppt/excel). |
+| 7.2 | Knowledgebase Listing | **ADAPT** | Convex query | IPC `kb_list` → SQLite SELECT. |
+| 7.3 | KB File Upload | **ADAPT** | Convex generateUploadURL | Files copied/linked to `Application Support/AskDexter/knowledge/{kbId}/` on local disk. No upload URL needed. |
 | 7.4 | KB Chunking & Embedding | **ADAPT** | Convex insertChunksBatch | Rust: read file → chunk (text_splitter) → embed (local model or API) → store chunks in SQLite `KnowledgeChunk` + vectors in LanceDB. |
-| 7.5 | KB Similarity Search | **ADAPT** | Convex cosine similarity | LanceDB ANN query via `lancedb` crate. Returns `embedding_id` → join with SQLite `KnowledgeChunk`. |
+| 7.5 | KB Similarity Search | **ADAPT** | Convex cosine similarity | LanceDB ANN query via `lancedb` crate scoped to one KB. Returns `embedding_id` → join with SQLite `KnowledgeChunk`. |
 | 7.6 | KB-Chat Linking | **ADAPT** | Convex linkToChat | SQLite junction table `chat_knowledge_base` (chat_id, kb_id). |
-| 7.7 | KB Context Builder | **ADAPT** | Server-side context build | Rust: query LanceDB for relevant chunks → build context string → inject into Pi SDK prompt. |
-| 7.8 | Library (KB Alias) | **DROP** | Re-export for compat | "Library" is now the primary name. No alias needed. |
-| 7.9 | Library Listing/Create/Query | **DROP** | Deduplicated endpoints | Unified under KB IPC commands. |
-| 7.10 | Library Context Builder | **DROP** | Duplicate of 7.7 | Merged into KB Context Builder. |
-| 7.11 | Library Search | **ADAPT** | API search endpoint | IPC `kb_search` → LanceDB vector search + SQLite full-text search (FTS5). |
-| 7.12 | KB File Deletion | **ADAPT** | Convex cascade delete | IPC `kb_delete_file` → SQLite DELETE cascade (chunks) + LanceDB vector deletion + local file removal. |
-| 7.13 | Library Page | **KEEP** | None (frontend) | Svelte page for KB management. |
+| 7.7 | KB Context Builder | **ADAPT** | Server-side context build | Rust: query LanceDB for relevant chunks within the linked KB only → build context string → inject into Pi SDK prompt. **Critically: only the name + summary of a KB is ever surfaced to the agent's long-term context; the full source contents are private to the KB and only appear when the agent is actively querying that KB.** |
+| 7.8 | KB-to-Memory Reference | **NEW** | — | On KB create / import, auto-create a `category: 'kb'` memory with content "Knowledgebase \"<name>\" is available — <summary>". Surfaces the KB to the agent's memories and knowledge graph without leaking source contents. |
+| 7.9 | KB Source Type Filter | **ADAPT** | — | On import, validate file MIME type against the KB's `acceptedTypes`; reject with a clear error if the type is unsupported. |
+| 7.10 | KB File Deletion | **ADAPT** | Convex cascade delete | IPC `kb_delete_file` → SQLite DELETE cascade (chunks) + LanceDB vector deletion + local file removal. |
+| 7.11 | KB Deletion | **ADAPT** | Convex cascade delete | IPC `kb_delete` → SQLite DELETE cascade (files, chunks) + LanceDB table drop + local KB directory removal + delete the auto-generated `category: 'kb'` memory. |
+| 7.12 | Library Search | **ADAPT** | API search endpoint | IPC `kb_search` → LanceDB vector search + SQLite full-text search (FTS5) scoped to a single KB. |
+| 7.13 | Library Page | **KEEP** | None (frontend) | Svelte `view-knowledge` page rendering the Library surface: `Knowledgebases | Files` segmented control, grid/list view-mode toggle, Add Knowledgebase dialog, and Knowledgebase cards. |
+| 7.14 | Files Listing | **KEEP** | None (frontend) | Svelte surface rendered from `filesData` (AI-generated artifacts + uploaded assets) with filter-pill toolbar. Lives inside Library > Files sub-tab. |
+| 7.15 | File Type Filter | **KEEP** | None (frontend) | Filter pills (All, Documents, Images, Videos, HTML, Code) operate on `filesData`. |
+| 7.16 | Library View-Mode Toggle | **KEEP** | None (frontend) | Grid / list view toggle (`.lib-view-toggle`) applies to whichever Library sub-tab is active. List view uses a compact `.lib-list-table` (Files: Name/Type/Size/Date; KBs: Name/Sources/Vectors/Types/Updated). |
 
-**Summary**: 1 KEEP, 8 ADAPT, 4 DROP. Convex vector search → LanceDB. File upload URL → local filesystem copy. "Library" is the canonical name (not "Knowledge Base").
+**Summary**: 1 NEW, 1 KEEP-front, 1 KEEP-restructured, 9 ADAPT. Convex vector search → LanceDB. File upload URL → local filesystem copy. Library is the canonical surface name; Knowledgebase is a child of the Library. **Memory/Graph isolation:** the agent's memories and knowledge graph only see KB name + summary — full contents stay inside the KB.
 
-**Complexity**: §7.4 Chunking & Embedding is **X** (novel pipeline: file→text_splitter→embedder→LanceDB). §7.5 Similarity Search is **H** (LanceDB ANN query + SQLite JOIN). §7.7 Context Builder is **H** (must rank and truncate chunks to fit context window). Other ADAPTs are **M**.
-**Effort**: **L** — The chunking pipeline is the core deliverable. Requires integration of a text splitting algorithm (`text-splitter` crate), embedding generation (via Pi SDK or local embedding model), and LanceDB IVF-PQ index management. ~2 weeks.
+**Complexity**: §7.4 Chunking & Embedding is **X** (novel pipeline: file→text_splitter→embedder→LanceDB). §7.5 Similarity Search is **H** (LanceDB ANN query + SQLite JOIN, scoped per KB). §7.7 Context Builder is **H** (must rank and truncate chunks to fit context window, with strict KB isolation). §7.8 KB-to-Memory Reference is **M** (auto-create a memory row on KB create; delete it on KB delete). Other ADAPTs are **M**.
+**Effort**: **L** — The chunking pipeline is the core deliverable. Requires integration of a text splitting algorithm (`text-splitter` crate), embedding generation (via Pi SDK or local embedding model), and LanceDB IVF-PQ index management per KB. ~2 weeks.
 **Rust Crates**: `lancedb = "0.15.0"` (vector store), `text-splitter = "0.8"` (chunking), `tokio` (async pipeline)
 **Web Dependencies Eliminated**:
   - `convex/knowledgebase.ts`: All 8 Convex mutations (`create`, `createFile`, `generateUploadURL`, `insertChunksBatch`, `_searchChunks`, `linkToChat`, `remove`) replaced by IPC commands in system_design.md §5.2
-  - Convex vector search (cosine similarity on `knowledgeChunks` table) → LanceDB ANN search with `IVF-PQ` index
+  - Convex vector search (cosine similarity on `knowledgeChunks` table) → LanceDB ANN search with `IVF-PQ` index, scoped to one KB at a time
   - Server-side `generateUploadURL` → Tauri file dialog + `std::fs::copy` to local knowledge directory
-**Data Flow**: File → Rust `kb_import_file` → read text → chunk (512 tokens, 50-token overlap) → batch embed via Pi SDK → INSERT SQLite `KnowledgeChunk` + INSERT LanceDB vectors → emit `embedding-progress` events
-**Risk**: **High**. LanceDB integration is new territory. IVF-PQ index training requires a minimum vector count (typically 256+). For small knowledge bases, must fall back to brute-force search. Mitigation: implement hybrid search (LanceDB ANN for >256 vectors, brute-force for <256).
+**Data Flow**: File → Rust `kb_import_file` → read text → chunk (512 tokens, 50-token overlap) → batch embed via Pi SDK → INSERT SQLite `KnowledgeChunk` + INSERT LanceDB vectors (scoped to KB) → emit `embedding-progress` events. The KB's public surface (name + summary) is mirrored as a `category: 'kb'` row in the Memory table for agent recall.
+**Risk**: **High**. LanceDB integration is new territory. IVF-PQ index training requires a minimum vector count (typically 256+). For small knowledge bases, must fall back to brute-force search. Mitigation: implement hybrid search (LanceDB ANN for >256 vectors, brute-force for <256), always scoped to the single active KB so isolation guarantees hold.
 
 ---
 
@@ -971,10 +978,7 @@ ENTITLEMENT (§1)
 
 DATABASE LAYER (shared infrastructure)
   └─► Required by: ALL categories with ADAPT verdict
-  └─► SQLite tables: User, Conversation, Message, KnowledgeBase, KnowledgeFile,
-      KnowledgeChunk, McpServer, UserSkill, GraphNode, GraphEdge, EntitlementLease,
-      AppSettings, Note, Task, Memory, Project, Attachment, Model, Provider,
-      McpConnector, ComposioApp, WebSearchProvider
+  └─► SQLite tables: User, Conversation, Message, **KnowledgeBase** (with `acceptedTypes` JSON column for text/document/image/video/audio/pdf/ppt/excel), **KnowledgeFile**, **KnowledgeChunk**, McpServer, UserSkill, GraphNode, GraphEdge, EntitlementLease, AppSettings, Note, Task, **Memory** (with a `kb` category for KB references that store only name + summary), Project, Attachment, Model, Provider, McpConnector, ComposioApp, WebSearchProvider
 
 PI SDK SIDECAR (§4)
   └─► Required by: §2.8 (auto-title generation)
@@ -1204,8 +1208,10 @@ With 2 developers working in parallel (1 Rust backend, 1 Svelte frontend), the *
 | `messages.list` (query) | `chat_get_thread` | `(conversation_id: String, branch_id: Option<String>) → Vec<Message>` | Recursive CTE for branching tree |
 | `chats.togglePin` (mutation) | `chat_toggle_pin` | `(conversation_id: String) → ()` | Boolean flip in SQLite |
 | `chats.remove` (mutation) | `chat_delete_conversation` | `(conversation_id: String) → ()` | CASCADE: messages, attachments, KB links |
-| `knowledgeBases._searchChunks` (action) | `kb_search_rag` | `(query: String, kb_id: String, top_k: u32) → Vec<RagResult>` | LanceDB ANN + SQLite JOIN |
-| `knowledgeBases.insertChunksBatch` (action) | `kb_import_file` | `(kb_id: String, file_path: String) → ImportResult` | Chunk + embed + store pipeline |
+| `knowledgeBases._searchChunks` (action) | `kb_search_rag` | `(query: String, kb_id: String, top_k: u32) → Vec<RagResult>` | LanceDB ANN + SQLite JOIN, scoped to a single KB |
+| `knowledgeBases.insertChunksBatch` (action) | `kb_import_file` | `(kb_id: String, file_path: String) → ImportResult` | Chunk + embed + store pipeline. Validates file MIME type against the KB's `acceptedTypes` (text/document/image/video/audio/pdf/ppt/excel) before processing. |
+| `knowledgeBases.create` (mutation) | `kb_create` | `(name: String, summary: String, acceptedTypes: Vec<String>) → String` | Creates KB row + auto-creates a `category: 'kb'` memory referencing the KB. |
+| `knowledgeBases.remove` (mutation) | `kb_delete` | `(kb_id: String) → ()` | CASCADE: files, chunks; drops LanceDB table; removes local KB directory; deletes the auto-generated `category: 'kb'` memory. |
 | `memories.list` (query) | `memory_list` | `(limit: u32, category: Option<String>) → Vec<Memory>` | Pinned-first ordering |
 | `users.updatePreferences` (mutation) | `settings_set` | `(key: String, value: String) → ()` | AppSettings key-value store |
 

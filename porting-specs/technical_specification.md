@@ -180,28 +180,38 @@ This Entity-Relationship diagram represents the local SQLite schema managed by `
 │         Project           │ │       KnowledgeBase       │ │         McpServer         │ │       Conversation        │
 │  - id: TEXT (PK)          │ │  - id: TEXT (PK)          │ │  - id: TEXT (PK)          │ │  - id: TEXT (PK)          │
 │  - user_id: TEXT (FK)     │ │  - user_id: TEXT (FK)     │ │  - user_id: TEXT (FK)     │ │  - user_id: TEXT (FK)     │
-│  - name: TEXT             │ │  - name: TEXT             │ │  - name: TEXT             │ │  - project_id: TEXT (FK)  │
-│  - instructions: TEXT     │ +─────────────┬─────────────+ │  - url: TEXT              │ │  - title: TEXT            │
-+─────────────┬─────────────+               │               │  - transport: TEXT (stdio)│ │  - model_id: TEXT         │
-              │                             │ 1             │  - config_json: TEXT      │ +─────────────┬─────────────+
-              │ 1                           ▼ 0..*          +───────────────────────────+               │
-              │                       +───────────────────────────+                                     │ 1
-              │                       │       KnowledgeFile       │                                     ▼ 0..*
-              └─────────────────────► │  - id: TEXT (PK)          │                       +───────────────────────────+
-                                      │  - kb_id: TEXT (FK)       │                       │          Message          │
-                                      │  - file_path: TEXT        │                       │  - id: TEXT (PK)          │
-                                      +─────────────┬─────────────+                       │  - conversation_id: (FK)  │
-                                                    │                                     │  - parent_message_id: TEXT│
-                                                    │ 1                                   │    (For Pi branching tree)│
-                                                    ▼ 0..*                                │  - role: TEXT             │
-                                      +───────────────────────────+                       │  - content: TEXT          │
-                                      │      KnowledgeChunk       │                       +───────────────────────────+
+│  - name: TEXT             │ │  - name: TEXT  (public)   │ │  - name: TEXT             │ │  - project_id: TEXT (FK)  │
+│  - instructions: TEXT     │ │  - summary: TEXT (public) │ │  - url: TEXT              │ │  - title: TEXT            │
++─────────────┬─────────────+ │  - accepted_types: JSON   │ │  - transport: TEXT (stdio)│ │  - model_id: TEXT         │
+              │               │  - source_count: INTEGER  │ │  - config_json: TEXT      │ +─────────────┬─────────────+
+              │ 1             │  - chunk_count: INTEGER   │ +───────────────────────────+               │
+              │               │  - vector_count: INTEGER  │                                     │ 1
+              │               │  - size_bytes: INTEGER    │                                     ▼ 0..*
+              │               +─────────────┬─────────────+                              +───────────────────────────+
+              │                             │ 1             │                              │          Message          │
+              │                             ▼ 0..*          │                              │  - id: TEXT (PK)          │
+              │                       +───────────────────────────+                        │  - conversation_id: (FK)  │
+              └─────────────────────► │       KnowledgeFile       │                        │  - parent_message_id: TEXT│
+                                      │  - id: TEXT (PK)          │                        │    (For Pi branching tree)│
+                                      │  - kb_id: TEXT (FK)       │                        │  - role: TEXT             │
+                                      │  - file_path: TEXT        │                        │  - content: TEXT          │
+                                      +─────────────┬─────────────+                        +───────────────────────────+
+                                                    │
+                                                    │ 1
+                                                    ▼ 0..*
+                                      +───────────────────────────+
+                                      │      KnowledgeChunk       │
                                       │  - id: TEXT (PK)          │
                                       │  - file_id: TEXT (FK)     │
                                       │  - chunk_text: TEXT       │
-                                      │  - embedding_id: TEXT     │◄─── (Linked to LanceDB
-                                      +───────────────────────────+      vector table)
+                                      │  - embedding_id: TEXT     │◄─── (Linked to per-KB
+                                      +───────────────────────────+      LanceDB vector table)
 ```
+
+> **Knowledgebase isolation contract:**
+> Each `KnowledgeBase` row is a self-contained, user-created RAG. The agent's long-term memory (the `Memory` table) and the property graph (`GraphNode` / `GraphEdge`) only ever see a Knowledgebase's **name + summary** (the public surface). The full source contents (chunks + vectors) live inside the KnowledgeFile + KnowledgeChunk tables and the per-KB LanceDB table, and are only accessible when the agent is actively querying that specific Knowledgebase.
+>
+> **Supported input types** (validated against the KB's `accepted_types` column before import): `text, document, image, video, audio, pdf, ppt, excel`.
 
 ### Specialized Local Tables
 
