@@ -983,14 +983,14 @@
 
     /* Empty state: centered composer, no header */
     .chat-area.empty-state {
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
     }
     .chat-area.empty-state .messages-container {
       display: none;
     }
     .chat-area.empty-state .composer {
-      padding: 96px 0 var(--space-4);
+      padding: 24px 0 var(--space-4);
       margin: 0 auto;
       max-width: 600px;
       width: 100%;
@@ -1006,6 +1006,10 @@
       text-align: center;
       margin-bottom: 24px;
       font-family: var(--font-sans);
+    }
+    .chat-area.empty-state .empty-state-heading {
+      margin-top: 24px;
+      margin-bottom: 0;
     }
     /* Single source of authority for greeting visibility — driven by .empty-state class on .chat-area */
     .chat-area:not(.empty-state) .empty-state-heading { display: none; }
@@ -1390,22 +1394,21 @@
       filter: drop-shadow(0 12px 22px rgba(15,23,42,0.16));
     }
 
-    /* Empty state: mascot inside composer (centered), chips float above like chat bubbles */
+    /* Empty state: mascot stands ON the composer (feet at top edge), chips float above as chat bubbles */
     .chat-area.empty-state .composer-mascot {
       bottom: auto;
-      top: 8px;
+      top: -80px;
       left: 50%;
       transform: translateX(-50%);
     }
     .chat-area.empty-state .suggestion-chips {
       position: absolute;
-      bottom: calc(100% + 4px);
+      bottom: calc(100% + 92px);
       left: 50%;
       transform: translateX(-50%);
       margin-bottom: 0;
       z-index: 21;
     }
-    .mascot-body { transform-origin: center bottom; }
     .composer-mascot .blink { animation: mascotBlink 4s ease-in-out infinite; }
     .composer-mascot .arm-left { transform-origin: 60px 100px; animation: armWave 3s ease-in-out infinite; }
     .composer-mascot .arm-right { transform-origin: 140px 100px; }
@@ -3417,6 +3420,85 @@
     .text-sm-semibold { font-weight: 600; font-size: var(--text-sm); }
     .flex-fill { flex: 1; min-width: 0; }
     .flex-row-wrap { display: flex; gap: 4px; flex-wrap: wrap; }
+
+    /* ===================== Projects Surface ===================== */
+    .projects-layout { display: flex; height: 100%; overflow: hidden; }
+    .projects-list { width: 280px; flex-shrink: 0; background-color: var(--bg-surface); border-right: 1px solid var(--border-default); display: flex; flex-direction: column; overflow: hidden; }
+    .projects-list-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; gap: 8px; border-bottom: 1px solid var(--border-subtle); }
+    .projects-list-title { font-size: 15px; font-weight: 600; color: var(--text-primary); flex: 1; }
+    .projects-list-search { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-bottom: 1px solid var(--border-subtle); background-color: var(--bg-base); }
+    .projects-list-search input { flex: 1; background: transparent; border: none; outline: none; color: var(--text-primary); font: inherit; font-size: 12px; }
+    .projects-list-search input::placeholder { color: var(--text-muted); }
+    .projects-list-search svg { width: 14px; height: 14px; stroke: var(--text-muted); fill: none; stroke-width: 2; flex-shrink: 0; }
+    .projects-list-actions { display: flex; align-items: center; gap: 4px; }
+    .projects-list-action { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-md); cursor: pointer; color: var(--text-secondary); transition: all 0.12s; border: none; background: transparent; }
+    .projects-list-action:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .projects-list-action svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .projects-items { flex: 1; overflow-y: auto; padding: 8px; }
+    .projects-section-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); padding: 6px 8px 4px; }
+    .project-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--radius-md); cursor: pointer; font-size: 13px; color: var(--text-secondary); transition: all 0.1s; margin-bottom: 2px; }
+    .project-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .project-item.active { background: var(--bg-active); color: var(--text-primary); font-weight: 500; }
+    .project-item-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: var(--radius-sm); color: white; font-size: 11px; font-weight: 700; }
+    .project-item-icon.globe { background: transparent; color: var(--text-muted); border: 1px solid var(--border-default); }
+    .project-item-icon svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .project-item-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .project-item-count { font-size: 10px; font-weight: 600; color: var(--text-muted); background: var(--bg-elevated); padding: 1px 7px; border-radius: 10px; flex-shrink: 0; }
+    .project-item.active .project-item-count { background: var(--bg-surface); color: var(--text-secondary); }
+    .projects-detail { flex: 1; overflow-y: auto; background: var(--bg-base); padding: 24px 32px; }
+    .projects-detail-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; gap: 16px; }
+    .projects-detail-title-row { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+    .projects-detail-title-icon { width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .projects-detail-title-icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .projects-detail-title-icon.globe { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-default); }
+    .projects-detail-title-text { flex: 1; min-width: 0; }
+    .projects-detail-title { font-size: 18px; font-weight: 600; color: var(--text-primary); line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .projects-detail-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .projects-detail-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .projects-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-bottom: var(--space-5); }
+    .project-stat-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: var(--space-4); }
+    .project-stat-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); }
+    .project-stat-value { font-size: 22px; font-weight: 600; color: var(--text-primary); margin-top: 4px; line-height: 1.2; }
+    .project-stat-meta { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+    .projects-section { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5); margin-bottom: var(--space-4); }
+    .projects-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3); gap: var(--space-2); }
+    .projects-section-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .projects-section-meta { font-size: 11px; color: var(--text-muted); }
+    .project-instructions-textarea { width: 100%; min-height: 90px; background: var(--bg-input); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: var(--space-3); color: var(--text-primary); font: inherit; font-size: 13px; line-height: 1.5; outline: none; resize: vertical; transition: border-color 0.12s; }
+    .project-instructions-textarea:focus { border-color: var(--accent); }
+    .project-instructions-textarea:disabled { opacity: 0.7; cursor: not-allowed; }
+    .project-instructions-empty { font-size: 12px; color: var(--text-muted); font-style: italic; }
+    .project-instructions-footer { display: flex; align-items: center; justify-content: space-between; margin-top: var(--space-3); gap: var(--space-2); }
+    .project-instructions-save-state { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+    .project-instructions-save-state.saved { color: var(--success); }
+    .project-instructions-save-state.dirty { color: var(--warning); }
+    .project-threads-list { display: flex; flex-direction: column; gap: 2px; }
+    .project-thread-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--radius-md); cursor: pointer; transition: background 0.1s; }
+    .project-thread-item:hover { background: var(--bg-hover); }
+    .project-thread-item-icon { width: 22px; height: 22px; border-radius: var(--radius-sm); background: var(--bg-elevated); color: var(--text-muted); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .project-thread-item-icon svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .project-thread-item-text { flex: 1; min-width: 0; }
+    .project-thread-item-title { font-size: 13px; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .project-thread-item-meta { font-size: 11px; color: var(--text-muted); }
+    .project-thread-item-arrow { color: var(--text-muted); opacity: 0; transition: opacity 0.1s; flex-shrink: 0; }
+    .project-thread-item-arrow svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .project-thread-item:hover .project-thread-item-arrow { opacity: 1; }
+    .project-empty-list { font-size: 12px; color: var(--text-muted); padding: 4px 2px; font-style: italic; }
+    .projects-danger-zone { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5); margin-top: var(--space-2); }
+    .projects-danger-zone-header { display: flex; align-items: center; gap: 8px; margin-bottom: var(--space-2); }
+    .projects-danger-zone-title { font-size: 13px; font-weight: 600; color: var(--error); }
+    .projects-danger-zone-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: var(--space-3); line-height: 1.5; }
+    .projects-detail-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: var(--space-8); text-align: center; color: var(--text-muted); }
+    .projects-detail-empty-icon { width: 56px; height: 56px; border-radius: var(--radius-xl); background: var(--bg-elevated); display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-4); color: var(--text-secondary); }
+    .projects-detail-empty-icon svg { width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+    .projects-detail-empty-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-1); }
+    .projects-detail-empty-desc { font-size: 12px; color: var(--text-muted); max-width: 320px; line-height: 1.5; }
+    .proj-color-blue   { background: linear-gradient(135deg, #3B82F6, #1D4ED8); }
+    .proj-color-purple { background: linear-gradient(135deg, #A855F7, #7C3AED); }
+    .proj-color-green  { background: linear-gradient(135deg, #10B981, #059669); }
+    .proj-color-amber  { background: linear-gradient(135deg, #F59E0B, #D97706); }
+    .proj-color-rose   { background: linear-gradient(135deg, #F43F5E, #BE123C); }
+    .proj-color-slate  { background: linear-gradient(135deg, #64748B, #475569); }
   </style>
 </head>
 <body>
@@ -4693,6 +4775,66 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
         </div>
       </div>
 
+
+      <!-- PROJECTS VIEW -->
+      <div class="page-view" id="view-projects">
+        <div class="projects-layout">
+          <!-- Left: Project list -->
+          <aside class="projects-list">
+            <div class="projects-list-header">
+              <span class="projects-list-title">Projects</span>
+              <div class="projects-list-actions">
+                <button class="projects-list-action" id="project-add-btn" title="New project" onclick="openProjectDialog()">
+                  <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="projects-list-search">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="projectSearchInput" placeholder="Filter projects..." oninput="renderProjectsList()">
+            </div>
+            <div class="projects-items" id="projectsItems">
+              <!-- Populated by renderProjectsList() -->
+            </div>
+          </aside>
+
+          <!-- Right: Project detail (or empty state) -->
+          <section class="projects-detail" id="projectsDetail">
+            <!-- Populated by renderProjectDetail() -->
+          </section>
+        </div>
+      </div>
+
+      <!-- Project Add/Edit Dialog -->
+      <div class="mem-dialog-overlay" id="project-dialog-overlay">
+        <div class="mem-dialog">
+          <h3 id="project-dialog-title">New Project</h3>
+          <div>
+            <label for="project-dialog-name">Name</label>
+            <input type="text" id="project-dialog-name" placeholder="e.g. Data Analytics" style="background: var(--bg-input); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: var(--space-2) var(--space-3); color: var(--text-primary); font: inherit; font-size: var(--text-sm); outline: none; width: 100%;">
+          </div>
+          <div>
+            <label for="project-dialog-color">Color</label>
+            <div id="project-dialog-color" style="display: flex; gap: 8px;">
+              <button type="button" class="projects-list-action proj-color-blue" data-color="blue" style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; padding: 0;" onclick="selectProjectColor(this)"></button>
+              <button type="button" class="projects-list-action proj-color-purple" data-color="purple" style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; padding: 0;" onclick="selectProjectColor(this)"></button>
+              <button type="button" class="projects-list-action proj-color-green" data-color="green" style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; padding: 0;" onclick="selectProjectColor(this)"></button>
+              <button type="button" class="projects-list-action proj-color-amber" data-color="amber" style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; padding: 0;" onclick="selectProjectColor(this)"></button>
+              <button type="button" class="projects-list-action proj-color-rose" data-color="rose" style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; padding: 0;" onclick="selectProjectColor(this)"></button>
+              <button type="button" class="projects-list-action proj-color-slate" data-color="slate" style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; padding: 0;" onclick="selectProjectColor(this)"></button>
+            </div>
+          </div>
+          <div>
+            <label for="project-dialog-instructions">Custom instructions <span style="color: var(--text-muted); font-weight: 400;">(optional)</span></label>
+            <textarea id="project-dialog-instructions" placeholder="What context, tone, or rules should apply to chats in this project?"></textarea>
+          </div>
+          <div class="mem-dialog-actions">
+            <button class="btn-cancel" onclick="closeProjectDialog()">Cancel</button>
+            <button class="btn-confirm" id="project-dialog-save" onclick="saveProjectFromDialog()">Create Project</button>
+          </div>
+        </div>
+      </div>
+
     </main>
 
     <!-- 4. StatusBar -->
@@ -4749,7 +4891,8 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
       'settings': 'view-settings',
       'subscription': 'view-subscription',
       'new-chat': 'view-chat',
-      'all-chats': 'view-chat'
+      'all-chats': 'view-chat',
+      'projects': 'view-projects'
     };
 
     // Active sidebar tab state: 'chat', 'agent', 'notes', 'work', 'playground'
@@ -4767,6 +4910,485 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
       { id: '5', title: 'Svelte 5 Runes Deep Dive', meta: 'GPT-4o • 3 days ago', pinned: false }
     ];
     let activeThreadId = '1';
+
+    // ===================== Projects =====================
+    // Mock project data, linked to threads by id. Mirror the SQLite schema:
+    //   projects(id, name, custom_instructions, created_at)
+    //   project_documents(project_id, node_id)  // for docs (unused in mock)
+    //   conversations.project_id REFERENCES projects(id) ON DELETE SET NULL
+    const projectsData = [
+      {
+        id: 'proj_data_analytics',
+        name: 'Data Analytics',
+        color: 'blue',
+        custom_instructions: 'You are a senior data analyst. Be precise, lead with the conclusion, and reference specific column names and metrics. When the user shares SQL or CSV snippets, infer the schema before answering. Prefer tabular output, bullet points, and concrete numbers over prose.',
+        created_at: '2026-05-12T10:24:00Z',
+      },
+      {
+        id: 'proj_web_dev',
+        name: 'Web Dev',
+        color: 'green',
+        custom_instructions: 'You are a frontend web developer pair-programmer. Default to modern web stack (Vite, Svelte 5 / React 19, TypeScript, Tailwind). Always show full file paths and complete, runnable code blocks. Call out browser compatibility or accessibility concerns proactively.',
+        created_at: '2026-05-14T08:02:00Z',
+      },
+      {
+        id: 'proj_research',
+        name: 'Research',
+        color: 'purple',
+        custom_instructions: 'You are a research assistant. Cite sources inline using [1], [2] notation. When uncertain, say so explicitly. Prefer well-sourced primary material over secondary commentary.',
+        created_at: '2026-06-01T14:48:00Z',
+      },
+    ];
+
+    // Each thread optionally belongs to a project
+    // (unassigned threads simply have project_id = null)
+    const threadProjectMap = {
+      '1': 'proj_web_dev',      // React Data Table Component
+      '2': 'proj_data_analytics', // API Migration Planning
+      '3': 'proj_web_dev',      // Blog Post: Local-First Architecture
+      '4': 'proj_research',     // Docker Deployment Strategy
+      '5': 'proj_data_analytics', // Svelte 5 Runes Deep Dive
+    };
+
+    let activeProjectId = null; // null = General (unassigned)
+    let activeProjectTab = 'list'; // reserved for future tab views
+    let projectSearchQuery = '';
+    let projectsInited = false;
+
+    function getProjectById(id) {
+      return projectsData.find(p => p.id === id) || null;
+    }
+
+    function getProjectInitial(name) {
+      return (name || '?').trim().charAt(0).toUpperCase();
+    }
+
+    function getProjectColorClass(color) {
+      const safe = ['blue', 'purple', 'green', 'amber', 'rose', 'slate'].includes(color) ? color : 'blue';
+      return 'proj-color-' + safe;
+    }
+
+    function countThreadsInProject(projectId) {
+      if (projectId === null || projectId === undefined) {
+        return Object.values(threadProjectMap).filter(v => v === null || v === undefined).length;
+      }
+      return Object.values(threadProjectMap).filter(v => v === projectId).length;
+    }
+
+    function getThreadsInProject(projectId) {
+      const result = [];
+      Object.entries(threadProjectMap).forEach(([threadId, pid]) => {
+        if (pid === projectId) {
+          const t = threads.find(t => t.id === threadId);
+          if (t) result.push(t);
+        }
+      });
+      return result;
+    }
+
+    function formatRelativeDate(iso) {
+      if (!iso) return '';
+      const then = new Date(iso).getTime();
+      const now = Date.now();
+      const diffMs = now - then;
+      const min = Math.floor(diffMs / 60000);
+      if (min < 1) return 'just now';
+      if (min < 60) return min + ' min ago';
+      const hr = Math.floor(min / 60);
+      if (hr < 24) return hr + 'h ago';
+      const day = Math.floor(hr / 24);
+      if (day < 7) return day + 'd ago';
+      return new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    }
+
+    // ===================== Projects List =====================
+    function renderProjectsList() {
+      const container = document.getElementById('projectsItems');
+      if (!container) return;
+      const q = projectSearchQuery.trim().toLowerCase();
+
+      const generalCount = countThreadsInProject(null);
+      const matchingProjects = projectsData.filter(p => !q || p.name.toLowerCase().includes(q) || (p.custom_instructions || '').toLowerCase().includes(q));
+
+      let html = '<div class="projects-section-label">General</div>';
+      html += renderProjectItem({
+        id: null,
+        name: 'General',
+        color: 'globe',
+        custom_instructions: null,
+        created_at: null,
+        isGeneral: true,
+        count: generalCount,
+      });
+
+      html += '<div class="projects-section-label">Workspaces</div>';
+      if (matchingProjects.length === 0) {
+        html += '<div class="project-empty-list" style="padding: 8px 10px;">No projects match "' + escapeHtml(projectSearchQuery) + '"</div>';
+      } else {
+        matchingProjects.forEach(p => {
+          html += renderProjectItem({ ...p, count: countThreadsInProject(p.id) });
+        });
+      }
+      container.innerHTML = html;
+    }
+
+    function renderProjectItem(p) {
+      const isActive = activeProjectId === p.id;
+      const iconClass = p.isGeneral ? 'globe' : getProjectColorClass(p.color);
+      const iconInner = p.isGeneral
+        ? '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'
+        : escapeHtml(getProjectInitial(p.name));
+      return `<div class="project-item ${isActive ? 'active' : ''}" onclick="selectProject(${p.id === null ? 'null' : "'" + p.id + "'"})">
+        <span class="project-item-icon ${iconClass}">${iconInner}</span>
+        <span class="project-item-name">${escapeHtml(p.name)}</span>
+        <span class="project-item-count">${p.count}</span>
+      </div>`;
+    }
+
+    function selectProject(id) {
+      activeProjectId = id;
+      renderProjectsList();
+      renderProjectDetail();
+    }
+
+    // ===================== Project Detail =====================
+    function renderProjectDetail() {
+      const detail = document.getElementById('projectsDetail');
+      if (!detail) return;
+      if (activeProjectId === null && activeProjectId !== undefined && !activeProjectId === false) {
+        // No selection yet
+      }
+      if (activeProjectId === undefined) activeProjectId = null;
+
+      if (activeProjectId === null) {
+        detail.innerHTML = renderProjectEmptyState();
+        return;
+      }
+      const p = getProjectById(activeProjectId);
+      if (!p) {
+        detail.innerHTML = renderProjectEmptyState();
+        return;
+      }
+
+      const isGeneral = p.id === null;
+      const threadList = getThreadsInProject(p.id);
+      const totalDocs = 0; // mock — would call list_project_documents in the real app
+      const colorClass = getProjectColorClass(p.color);
+      const iconInner = '<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>';
+
+      detail.innerHTML = `
+        <div class="projects-detail-header">
+          <div class="projects-detail-title-row">
+            <div class="projects-detail-title-icon ${colorClass}">${iconInner}</div>
+            <div class="projects-detail-title-text">
+              <div class="projects-detail-title">${escapeHtml(p.name)}</div>
+              <div class="projects-detail-subtitle">Workspace · ${escapeHtml(p.color || 'blue')} accent · created ${formatRelativeDate(p.created_at)}</div>
+            </div>
+          </div>
+          <div class="projects-detail-actions">
+            <button class="btn" onclick="openProjectDialog('${p.id}')">Edit</button>
+            <button class="btn primary" onclick="openProjectInChat('${p.id}')">Open in Chat</button>
+          </div>
+        </div>
+
+        <div class="projects-stats-grid">
+          <div class="project-stat-card">
+            <div class="project-stat-label">Threads</div>
+            <div class="project-stat-value">${threadList.length}</div>
+            <div class="project-stat-meta">${threadList.length === 0 ? 'No chats yet' : (threadList.length === 1 ? 'chat in this project' : 'chats in this project')}</div>
+          </div>
+          <div class="project-stat-card">
+            <div class="project-stat-label">Linked Documents</div>
+            <div class="project-stat-value">${totalDocs}</div>
+            <div class="project-stat-meta">${totalDocs === 0 ? 'No docs linked' : (totalDocs === 1 ? 'doc attached' : 'docs attached')}</div>
+          </div>
+          <div class="project-stat-card">
+            <div class="project-stat-label">Created</div>
+            <div class="project-stat-value" style="font-size: 18px;">${p.created_at ? new Date(p.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : '—'}</div>
+            <div class="project-stat-meta">${formatRelativeDate(p.created_at)}</div>
+          </div>
+        </div>
+
+        <div class="projects-section">
+          <div class="projects-section-header">
+            <div class="projects-section-title">Custom Instructions</div>
+            <div class="projects-section-meta">Injected into every chat in this project</div>
+          </div>
+          <textarea
+            class="project-instructions-textarea"
+            id="projectInstructionsTextarea"
+            placeholder="Add tone, role, formatting rules, or context that should apply to every chat in this project…"
+            oninput="onInstructionsEdit()"
+          >${escapeHtml(p.custom_instructions || '')}</textarea>
+          <div class="project-instructions-footer">
+            <div class="project-instructions-save-state" id="projectInstructionsSaveState">${(p.custom_instructions || '').length > 0 ? 'Saved' : 'Empty — click Save to apply'}</div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn" id="projectInstructionsResetBtn" onclick="resetInstructions()">Reset</button>
+              <button class="btn primary" id="projectInstructionsSaveBtn" onclick="saveInstructions()">Save</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="projects-section">
+          <div class="projects-section-header">
+            <div class="projects-section-title">Chats in this Project</div>
+            <div class="projects-section-meta">${threadList.length} ${threadList.length === 1 ? 'thread' : 'threads'}</div>
+          </div>
+          ${renderProjectThreadList(threadList)}
+        </div>
+
+        <div class="projects-danger-zone">
+          <div class="projects-danger-zone-header">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--error);"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <div class="projects-danger-zone-title">Danger Zone</div>
+          </div>
+          <div class="projects-danger-zone-desc">Deleting this project is permanent. Chats currently in this project will become unassigned (moved to General), but their content is preserved.</div>
+          <button class="btn" style="color: var(--error); border-color: var(--border-default);" onclick="deleteProject('${p.id}')">Delete Project</button>
+        </div>
+      `;
+    }
+
+    function renderProjectThreadList(threadList) {
+      if (threadList.length === 0) {
+        return '<div class="project-empty-list">No chats in this project yet. Start a new chat and assign it to this workspace.</div>';
+      }
+      return '<div class="project-threads-list">' + threadList.map(t => `
+        <div class="project-thread-item" onclick="openProjectThread('${t.id}')">
+          <div class="project-thread-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="project-thread-item-text">
+            <div class="project-thread-item-title">${escapeHtml(t.title)}</div>
+            <div class="project-thread-item-meta">${escapeHtml(t.meta || '')}</div>
+          </div>
+          <div class="project-thread-item-arrow">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+      `).join('') + '</div>';
+    }
+
+    function renderProjectEmptyState() {
+      return `
+        <div class="projects-detail-empty">
+          <div class="projects-detail-empty-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="projects-detail-empty-title">Select a project</div>
+          <div class="projects-detail-empty-desc">Pick a workspace from the list to view its threads, custom instructions, and linked documents. Or create a new one.</div>
+          <button class="btn primary" style="margin-top: 16px;" onclick="openProjectDialog()">+ New Project</button>
+        </div>
+      `;
+    }
+
+    function onInstructionsEdit() {
+      const p = getProjectById(activeProjectId);
+      if (!p) return;
+      const ta = document.getElementById('projectInstructionsTextarea');
+      const state = document.getElementById('projectInstructionsSaveState');
+      if (!ta || !state) return;
+      const current = ta.value;
+      const original = p.custom_instructions || '';
+      if (current === original) {
+        state.className = 'project-instructions-save-state';
+        state.textContent = original ? 'Saved' : 'Empty — click Save to apply';
+      } else {
+        state.className = 'project-instructions-save-state dirty';
+        state.textContent = 'Unsaved changes';
+      }
+    }
+
+    function saveInstructions() {
+      const p = getProjectById(activeProjectId);
+      if (!p) return;
+      const ta = document.getElementById('projectInstructionsTextarea');
+      if (!ta) return;
+      p.custom_instructions = ta.value;
+      // In a real app: ipc.updateProject(p.id, p.name, p.custom_instructions)
+      const state = document.getElementById('projectInstructionsSaveState');
+      if (state) {
+        state.className = 'project-instructions-save-state saved';
+        state.textContent = 'Saved';
+      }
+    }
+
+    function resetInstructions() {
+      const ta = document.getElementById('projectInstructionsTextarea');
+      if (ta) { ta.value = ''; onInstructionsEdit(); }
+    }
+
+    function openProjectInChat(projectId) {
+      // Switch to chat view and assign the active thread to this project
+      const threadsInProject = getThreadsInProject(projectId);
+      if (threadsInProject.length > 0) {
+        activeThreadId = threadsInProject[0].id;
+        const titleEl = document.getElementById('chatHeaderTitle');
+        if (titleEl) titleEl.innerText = threadsInProject[0].title;
+      } else {
+        // No thread yet — start a new one
+        startNewChat();
+        activeThreadId = 'new';
+      }
+      switchTab('view-chat');
+      switchSidebarTab('chat');
+      renderProjectsList();
+    }
+
+    function openProjectThread(threadId) {
+      activeThreadId = threadId;
+      const t = threads.find(t => t.id === threadId);
+      if (t) {
+        const titleEl = document.getElementById('chatHeaderTitle');
+        if (titleEl) titleEl.innerText = t.title;
+      }
+      switchTab('view-chat');
+      switchSidebarTab('chat');
+    }
+
+    // ===================== Project Add/Edit Dialog =====================
+    let projectDialogMode = 'create'; // 'create' | 'edit'
+    let projectDialogTargetId = null;
+    let projectDialogColor = 'blue';
+
+    function openProjectDialog(projectId) {
+      const overlay = document.getElementById('project-dialog-overlay');
+      const titleEl = document.getElementById('project-dialog-title');
+      const nameInput = document.getElementById('project-dialog-name');
+      const instrInput = document.getElementById('project-dialog-instructions');
+      const saveBtn = document.getElementById('project-dialog-save');
+      if (!overlay) return;
+
+      if (projectId) {
+        const p = getProjectById(projectId);
+        if (!p) return;
+        projectDialogMode = 'edit';
+        projectDialogTargetId = projectId;
+        projectDialogColor = p.color || 'blue';
+        titleEl.textContent = 'Edit Project';
+        saveBtn.textContent = 'Save Changes';
+        nameInput.value = p.name;
+        instrInput.value = p.custom_instructions || '';
+      } else {
+        projectDialogMode = 'create';
+        projectDialogTargetId = null;
+        projectDialogColor = 'blue';
+        titleEl.textContent = 'New Project';
+        saveBtn.textContent = 'Create Project';
+        nameInput.value = '';
+        instrInput.value = '';
+      }
+      // Highlight selected color swatch
+      document.querySelectorAll('#project-dialog-color button').forEach(btn => {
+        btn.style.borderColor = (btn.dataset.color === projectDialogColor) ? 'var(--text-primary)' : 'transparent';
+      });
+      overlay.classList.add('open');
+      setTimeout(() => nameInput.focus(), 50);
+    }
+
+    function closeProjectDialog() {
+      const overlay = document.getElementById('project-dialog-overlay');
+      if (overlay) overlay.classList.remove('open');
+    }
+
+    function selectProjectColor(btn) {
+      projectDialogColor = btn.dataset.color;
+      document.querySelectorAll('#project-dialog-color button').forEach(b => {
+        b.style.borderColor = (b.dataset.color === projectDialogColor) ? 'var(--text-primary)' : 'transparent';
+      });
+    }
+
+    function saveProjectFromDialog() {
+      const nameInput = document.getElementById('project-dialog-name');
+      const instrInput = document.getElementById('project-dialog-instructions');
+      const name = (nameInput.value || '').trim();
+      if (!name) { nameInput.focus(); return; }
+      const instructions = instrInput.value || '';
+
+      if (projectDialogMode === 'create') {
+        const newProject = {
+          id: 'proj_' + Math.random().toString(36).substring(2, 10),
+          name,
+          color: projectDialogColor,
+          custom_instructions: instructions,
+          created_at: new Date().toISOString(),
+        };
+        projectsData.push(newProject);
+        // In a real app: await ipc.createProject(newProject.id, newProject.name, newProject.custom_instructions)
+        activeProjectId = newProject.id;
+      } else if (projectDialogMode === 'edit' && projectDialogTargetId) {
+        const p = getProjectById(projectDialogTargetId);
+        if (p) {
+          p.name = name;
+          p.color = projectDialogColor;
+          p.custom_instructions = instructions;
+          // In a real app: await ipc.updateProject(p.id, p.name, p.custom_instructions)
+        }
+      }
+      closeProjectDialog();
+      renderProjectsList();
+      renderProjectDetail();
+    }
+
+    function deleteProject(projectId) {
+      const p = getProjectById(projectId);
+      if (!p) return;
+      if (!confirm('Delete project "' + p.name + '"?\\n\\nChats in this project will move to General. This cannot be undone.')) return;
+      // Unassign all threads
+      Object.keys(threadProjectMap).forEach(tid => {
+        if (threadProjectMap[tid] === projectId) threadProjectMap[tid] = null;
+      });
+      // Remove project
+      const idx = projectsData.findIndex(x => x.id === projectId);
+      if (idx >= 0) projectsData.splice(idx, 1);
+      // In a real app: await ipc.deleteProject(projectId)
+      activeProjectId = null;
+      renderProjectsList();
+      renderProjectDetail();
+    }
+
+    // Wire up search input
+    document.addEventListener('DOMContentLoaded', () => {});
+
+    // Init projects on first view
+    document.addEventListener('view-loaded', () => {
+      if (document.getElementById('view-projects').classList.contains('active')) {
+        renderProjectsList();
+        renderProjectDetail();
+        projectsInited = true;
+      }
+    });
+
+    // Search filter wiring
+    document.addEventListener('input', (e) => {
+      if (e.target && e.target.id === 'projectSearchInput') {
+        projectSearchQuery = e.target.value;
+        renderProjectsList();
+      }
+    });
+
+    // Escape closes project dialog
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const overlay = document.getElementById('project-dialog-overlay');
+        if (overlay && overlay.classList.contains('open')) closeProjectDialog();
+      }
+      // Enter inside project dialog name field triggers save
+      if (e.key === 'Enter' && e.target && e.target.id === 'project-dialog-name') {
+        e.preventDefault();
+        saveProjectFromDialog();
+      }
+    });
+
+    // HTML escape helper (used in many places)
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
 
     // Skills data
     const skillsData = {
@@ -5215,6 +5837,17 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
         allChatsItem.innerHTML = '<span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="nav-label">All Chats</span>';
         allChatsItem.onclick = () => handleSubNavRouting('all-chats', allChatsItem);
         quickSection.appendChild(allChatsItem);
+
+        // Projects
+        const projectsNavItem = document.createElement('a');
+        projectsNavItem.className = 'nav-item-sub';
+        projectsNavItem.setAttribute('data-id', 'projects');
+        projectsNavItem.innerHTML = '<span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span><span class="nav-label">Projects</span>';
+        if (typeof activeProjectId !== 'undefined' && activeProjectId) {
+          projectsNavItem.innerHTML += '<span class="badge">1</span>';
+        }
+        projectsNavItem.onclick = () => handleSubNavRouting('projects', projectsNavItem);
+        quickSection.appendChild(projectsNavItem);
 
         navContainer.appendChild(quickSection);
 
