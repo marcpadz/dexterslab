@@ -1099,28 +1099,16 @@
       max-width: 600px;
       width: 100%;
     }
-    .chat-area.empty-state .composer-mascot {
-      display: none;
-    }
     .chat-area.empty-state .composer-footer {
       display: none;
     }
 
-    /* Greeting inside the composer (new chat / empty state) */
-    .composer-greeting {
-      display: none;
-    }
-    .chat-area.empty-state .composer-greeting {
-      display: block;
-      text-align: center;
-      padding: var(--space-2) var(--space-3) var(--space-3);
-    }
-
     .empty-state-heading {
-      font-size: 24px;
+      font-size: 32px;
       font-weight: 600;
       color: var(--text-primary);
-      margin: 0;
+      text-align: center;
+      margin-bottom: 24px;
       font-family: var(--font-sans);
     }
     .chat-area.empty-state .suggestion-chips {
@@ -3778,6 +3766,8 @@
 
             </div>
 
+            <h1 class="empty-state-heading" id="emptyStateHeading">What can I do for you?</h1>
+
             <div class="composer">
 
               <svg class="composer-mascot" aria-hidden="true" viewBox="0 0 200 200">
@@ -3819,10 +3809,6 @@
                   </g>
                 </g>
               </svg>
-
-              <div class="composer-greeting">
-                <h1 class="empty-state-heading" id="emptyStateHeading">What can I do for you?</h1>
-              </div>
 
               <div class="suggestion-chips" id="suggestionChipsContainer">
                 
