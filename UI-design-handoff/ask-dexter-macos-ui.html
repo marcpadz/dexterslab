@@ -267,33 +267,6 @@
       height: 10px;
     }
 
-    .search-btn {
-      display: flex;
-      align-items: center;
-      gap: var(--space-1-5);
-      background-color: var(--bg-input);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-md);
-      padding: var(--space-1) var(--space-3);
-      cursor: pointer;
-      font-size: 11px;
-      color: var(--text-secondary);
-      transition: background-color var(--duration-fast) var(--ease-out);
-    }
-
-    .search-btn:hover {
-      background-color: var(--bg-hover);
-    }
-
-    .search-shortcut {
-      font-size: 9px;
-      color: var(--text-muted);
-      background-color: var(--bg-surface);
-      padding: 0 4px;
-      border-radius: 2px;
-      border: 1px solid var(--border-default);
-    }
-
     /* Sidebar Search */
     .sidebar-search {
       display: flex;
@@ -459,52 +432,6 @@
       stroke: currentColor;
       fill: none;
       stroke-width: 1.8;
-    }
-
-    /* Main Nav Section (Contains New Button) */
-    .new-chat-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      width: 100%;
-      padding: 8px 10px;
-      background: transparent;
-      color: var(--sidebar-text-muted);
-      border: none;
-      border-radius: var(--radius-md);
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      font-family: var(--font-sans);
-      margin-bottom: 4px;
-      text-align: left;
-    }
-
-    .new-chat-btn:hover {
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--sidebar-text);
-    }
-
-    .new-chat-btn .nc-icon {
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1.5px solid currentColor;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .new-chat-btn .nc-icon svg {
-      width: 12px;
-      height: 12px;
-      stroke-width: 3px;
-    }
-
-    .new-chat-label {
-      white-space: nowrap;
     }
 
     /* Sidebar Nav Content */
@@ -901,7 +828,7 @@
     .sidebar.collapsed .section-label,
     .sidebar.collapsed .thread-item,
     .sidebar.collapsed .thread-item-wrap,
-    .sidebar.collapsed .new-chat-label,
+    /* (new-chat-label removed) */
     .sidebar.collapsed .badge,
     .sidebar.collapsed .thread-item-meta {
       display: none;
@@ -928,15 +855,6 @@
     }
 
     .sidebar.collapsed .nav-icon {
-      margin: 0;
-    }
-
-    .sidebar.collapsed .new-chat-btn {
-      justify-content: center;
-      padding: 10px;
-    }
-
-    .sidebar.collapsed .new-chat-btn .nc-icon {
       margin: 0;
     }
 
@@ -1089,6 +1007,8 @@
       margin-bottom: 24px;
       font-family: var(--font-sans);
     }
+    /* Single source of authority for greeting visibility — driven by .empty-state class on .chat-area */
+    .chat-area:not(.empty-state) .empty-state-heading { display: none; }
     .chat-area.empty-state .suggestion-chips {
       margin-top: 16px;
     }
@@ -1883,14 +1803,6 @@
     .composer-dropdown.open { display: block; }
     @keyframes dropUp { from { opacity: 0; transform: translateY(4px) translateX(-50%); } to { opacity: 1; transform: translateY(0) translateX(-50%); } }
 
-    .composer-dropdown-title {
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: var(--text-muted);
-      padding: 6px 10px 4px;
-    }
     .composer-dropdown-item {
       display: flex;
       align-items: center;
@@ -2004,57 +1916,6 @@
     .tokens-left { font-size: 10px; color: var(--text-muted); font-family: var(--font-mono); }
 
     /* @ Mention Dropdown */
-    .mention-dropdown {
-      position: absolute;
-      bottom: calc(100% + 8px);
-      left: 60px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-lg);
-      padding: var(--space-1-5);
-      min-width: 280px;
-      z-index: 100;
-      display: none;
-      animation: dropIn 0.15s var(--ease-out);
-    }
-    .mention-dropdown.open { display: block; }
-    @keyframes dropIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-
-    .mention-category {
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: var(--text-muted);
-      padding: var(--space-2) var(--space-2-5) var(--space-1);
-    }
-    .mention-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2-5);
-      padding: var(--space-1-5) var(--space-2-5);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      font-size: var(--text-sm);
-      transition: background 0.1s;
-    }
-    .mention-item:hover { background: var(--bg-hover); }
-    .mention-item-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: var(--text-xs);
-      background: var(--bg-elevated);
-      color: var(--text-secondary);
-    }
-    .mention-item-icon svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; }
-    .mention-item-text { flex: 1; }
-    .mention-item-sub { font-size: 11px; color: var(--text-muted); }
-
     /* Right Canvas Panel & Resize Handle */
     .canvas-resize-handle {
       width: 4px;
@@ -2201,49 +2062,6 @@
       stroke-width: 2px;
     }
 
-    .card-preview-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background-color: var(--bg-surface);
-      border: 1px dashed var(--border-default);
-      border-radius: var(--radius-md);
-      padding: var(--space-6) var(--space-4);
-      text-align: center;
-    }
-
-    .preview-box {
-      width: 64px;
-      height: 64px;
-      border-radius: var(--radius-xl);
-      background-color: rgba(59, 130, 246, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .preview-box svg {
-      width: 32px;
-      height: 32px;
-      stroke: var(--accent);
-      fill: none;
-      stroke-width: 2px;
-    }
-
-    .preview-title {
-      font-size: var(--text-sm);
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-top: var(--space-2);
-    }
-
-    .preview-subtitle {
-      font-size: var(--text-xs);
-      color: var(--text-secondary);
-      margin-top: var(--space-1);
-    }
-
     .tool-grid {
       display: flex;
       flex-direction: column;
@@ -2296,42 +2114,7 @@
     }
 
     /* Mock code editor */
-    .code-tree-view {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      background-color: var(--bg-surface);
-    }
 
-    .code-tree-header {
-      padding: var(--space-2) var(--space-4);
-      background-color: var(--bg-surface);
-      border-bottom: 1px solid var(--border-default);
-      font-size: var(--text-xs);
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    .code-editor-mock {
-      background-color: var(--bg-input);
-      padding: var(--space-4);
-      overflow-x: auto;
-      flex: 1;
-    }
-
-    .code-editor-mock pre {
-      margin: 0;
-    }
-
-    .code-editor-mock code {
-      font-family: var(--font-mono);
-      font-size: var(--text-xs);
-      color: var(--text-primary);
-      line-height: 1.5;
-    }
 
     /* Mock browser view */
     .mock-browser {
@@ -3613,6 +3396,11 @@
     .form-input::placeholder {
       color: var(--text-muted);
     }
+
+    /* === Utility classes (extracted from inline styles) === */
+    .text-sm-semibold { font-weight: 600; font-size: var(--text-sm); }
+    .flex-fill { flex: 1; min-width: 0; }
+    .flex-row-wrap { display: flex; gap: 4px; flex-wrap: wrap; }
   </style>
 </head>
 <body>
@@ -3787,9 +3575,10 @@
               </svg>
 
               <div class="suggestion-chips" id="suggestionChipsContainer">
-                
-                
-                
+                <button class="chip" onclick="selectChip(this.dataset.text)" data-text="Explain my workspace">Explain my workspace</button>
+                <button class="chip" onclick="selectChip(this.dataset.text)" data-text="Build a React data table">Build a React data table</button>
+                <button class="chip" onclick="selectChip(this.dataset.text)" data-text="Run a local inference">Run a local inference</button>
+                <button class="chip" onclick="selectChip(this.dataset.text)" data-text="Help me write a blog post">Help me write a blog post</button>
               </div>
 
               <div class="composer-container">
@@ -4667,7 +4456,7 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
             <div style="display: flex; align-items: center; gap: 12px;">
               <div class="sidebar-avatar" style="background: linear-gradient(135deg, #4285F4, #34A853); color: white; font-weight: 700;">G</div>
               <div style="flex: 1;">
-                <div style="font-weight: 600; font-size: var(--text-sm);">Google Workspace</div>
+                <div class="text-sm-semibold">Google Workspace</div>
                 <div style="font-size: 10px; color: var(--text-muted);">Gmail, Drive, Calendar integration</div>
               </div>
               <span class="badge success">Enabled</span>
@@ -4677,7 +4466,7 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
             <div style="display: flex; align-items: center; gap: 12px;">
               <div class="sidebar-avatar" style="background: #000; color: white; font-weight: 600; font-size: 10px;">N</div>
               <div style="flex: 1;">
-                <div style="font-weight: 600; font-size: var(--text-sm);">Notion</div>
+                <div class="text-sm-semibold">Notion</div>
                 <div style="font-size: 10px; color: var(--text-muted);">Workspace pages, databases, search</div>
               </div>
               <span class="badge success">Enabled</span>
@@ -4687,7 +4476,7 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
             <div style="display: flex; align-items: center; gap: 12px;">
               <div class="sidebar-avatar" style="background: linear-gradient(135deg, #A855F7, #7C3AED); color: white; font-weight: 700; font-size: 10px;">C</div>
               <div style="flex: 1;">
-                <div style="font-weight: 600; font-size: var(--text-sm);">Canva</div>
+                <div class="text-sm-semibold">Canva</div>
                 <div style="font-size: 10px; color: var(--text-muted);">Design assets, templates, exports</div>
               </div>
               <span class="badge success">Enabled</span>
@@ -4697,7 +4486,7 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
             <div style="display: flex; align-items: center; gap: 12px;">
               <div class="sidebar-avatar" style="background: #E2E8F0; color: #475569; font-weight: 700;">+</div>
               <div style="flex: 1;">
-                <div style="font-weight: 600; font-size: var(--text-sm);">Discover Apps</div>
+                <div class="text-sm-semibold">Discover Apps</div>
                 <div style="font-size: 10px; color: var(--text-muted);">Browse the Marketplace for more integrations</div>
               </div>
               <button class="btn" onclick="handleSubNavRouting('marketplace', document.querySelector('.nav-item-sub[data-id=\'marketplace\']'))">Browse</button>
@@ -4723,10 +4512,10 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
             <div class="card marketplace-card">
               <div style="display: flex; align-items: flex-start; gap: 10px;">
                 <div class="sidebar-avatar" style="background: linear-gradient(135deg, #6366F1, #8B5CF6); color: white;">A</div>
-                <div style="flex: 1; min-width: 0;">
-                  <div style="font-weight: 600; font-size: var(--text-sm);">a11y-debugging</div>
+                <div class="flex-fill">
+                  <div class="text-sm-semibold">a11y-debugging</div>
                   <div style="font-size: 10px; color: var(--text-muted); margin: 2px 0 4px;">WCAG AA verification via DevTools MCP</div>
-                  <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  <div class="flex-row-wrap">
                     <span class="badge">a11y</span>
                     <span class="badge">debugging</span>
                   </div>
@@ -4737,10 +4526,10 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
             <div class="card marketplace-card">
               <div style="display: flex; align-items: flex-start; gap: 10px;">
                 <div class="sidebar-avatar" style="background: linear-gradient(135deg, #F59E0B, #EF4444); color: white;">S</div>
-                <div style="flex: 1; min-width: 0;">
-                  <div style="font-weight: 600; font-size: var(--text-sm);">sns-scan</div>
+                <div class="flex-fill">
+                  <div class="text-sm-semibold">sns-scan</div>
                   <div style="font-size: 10px; color: var(--text-muted); margin: 2px 0 4px;">Sentiment &amp; brand monitoring tool for social media.</div>
-                  <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  <div class="flex-row-wrap">
                     <span class="badge">social</span>
                     <span class="badge">analytics</span>
                   </div>
@@ -4751,10 +4540,10 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
             <div class="card marketplace-card">
               <div style="display: flex; align-items: flex-start; gap: 10px;">
                 <div class="sidebar-avatar" style="background: linear-gradient(135deg, #10B981, #059669); color: white;">G</div>
-                <div style="flex: 1; min-width: 0;">
+                <div class="flex-fill">
                   <div style="font-weight: 600; font-size: var(--text-sm);;">google-antigravity-sdk</div>
                   <div style="font-size: 10px; color: var(--text-muted); margin: 2px 0 4px;">Multi-agent autonomous hierarchy orchestration.</div>
-                  <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  <div class="flex-row-wrap">
                     <span class="badge">agents</span>
                     <span class="badge">SDK</span>
                   </div>
@@ -4765,10 +4554,10 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
             <div class="card marketplace-card">
               <div style="display: flex; align-items: flex-start; gap: 10px;">
                 <div class="sidebar-avatar" style="background: linear-gradient(135deg, #EC4899, #8B5CF6); color: white;">L</div>
-                <div style="flex: 1; min-width: 0;">
-                  <div style="font-weight: 600; font-size: var(--text-sm);">letter-dropper</div>
+                <div class="flex-fill">
+                  <div class="text-sm-semibold">letter-dropper</div>
                   <div style="font-size: 10px; color: var(--text-muted); margin: 2px 0 4px;">Physical mail via Lob API — letters, postcards, checks.</div>
-                  <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  <div class="flex-row-wrap">
                     <span class="badge">api</span>
                     <span class="badge">mail</span>
                   </div>
@@ -4782,10 +4571,10 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
             <div class="card marketplace-card">
               <div style="display: flex; align-items: flex-start; gap: 10px;">
                 <div class="sidebar-avatar" style="background: linear-gradient(135deg, #3B82F6, #1D4ED8); color: white;">S</div>
-                <div style="flex: 1; min-width: 0;">
-                  <div style="font-weight: 600; font-size: var(--text-sm);">StitchMCP</div>
+                <div class="flex-fill">
+                  <div class="text-sm-semibold">StitchMCP</div>
                   <div style="font-size: 10px; color: var(--text-muted); margin: 2px 0 4px;">Screen generation, UI layout prototyping, variant iterations.</div>
-                  <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  <div class="flex-row-wrap">
                     <span class="badge">ui</span>
                     <span class="badge">prototyping</span>
                   </div>
@@ -4796,10 +4585,10 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
             <div class="card marketplace-card">
               <div style="display: flex; align-items: flex-start; gap: 10px;">
                 <div class="sidebar-avatar" style="background: #EAB308; color: #000; font-weight: 700;">C</div>
-                <div style="flex: 1; min-width: 0;">
-                  <div style="font-weight: 600; font-size: var(--text-sm);">chrome-devtools-mcp</div>
+                <div class="flex-fill">
+                  <div class="text-sm-semibold">chrome-devtools-mcp</div>
                   <div style="font-size: 10px; color: var(--text-muted); margin: 2px 0 4px;">Browser automation, DevTools access, page screenshots.</div>
-                  <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  <div class="flex-row-wrap">
                     <span class="badge">browser</span>
                     <span class="badge">debug</span>
                   </div>
@@ -4810,10 +4599,10 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
             <div class="card marketplace-card">
               <div style="display: flex; align-items: flex-start; gap: 10px;">
                 <div class="sidebar-avatar" style="background: #6B7280; color: white; font-weight: 700;">D</div>
-                <div style="flex: 1; min-width: 0;">
+                <div class="flex-fill">
                   <div style="font-weight: 600; font-size: var(--text-sm);;">Docker MCP</div>
                   <div style="font-size: 10px; color: var(--text-muted); margin: 2px 0 4px;">Container lifecycle management, compose orchestration.</div>
-                  <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  <div class="flex-row-wrap">
                     <span class="badge">container</span>
                     <span class="badge">devops</span>
                   </div>
@@ -4824,10 +4613,10 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
             <div class="card marketplace-card">
               <div style="display: flex; align-items: flex-start; gap: 10px;">
                 <div class="sidebar-avatar" style="background: #22C55E; color: white; font-weight: 700;">G</div>
-                <div style="flex: 1; min-width: 0;">
+                <div class="flex-fill">
                   <div style="font-weight: 600; font-size: var(--text-sm);;">GitHub MCP</div>
                   <div style="font-size: 10px; color: var(--text-muted); margin: 2px 0 4px;">PR review, issue management, code search, repo operations.</div>
-                  <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  <div class="flex-row-wrap">
                     <span class="badge">git</span>
                     <span class="badge">github</span>
                   </div>
@@ -4950,7 +4739,8 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
     // Active sidebar tab state: 'chat', 'agent', 'notes', 'work', 'playground'
     let currentSidebarTab = 'chat';
     let isSidebarCollapsed = false;
-    let currentTheme = 'light';
+    // Single source of authority: read initial theme from the HTML data-theme attribute on <html>
+    let currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
 
     // Mock thread list for display
     const threads = [
@@ -5565,14 +5355,8 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
       document.getElementById('chatHeaderTitle').innerText = thread.title;
       switchTab('view-chat');
 
-      // Remove empty state when loading a thread
-      const chatArea = document.getElementById('chatArea');
-      const emptyHeading = document.getElementById('emptyStateHeading');
-      const suggestionChips = document.getElementById('suggestionChipsContainer');
-      chatArea.classList.remove('empty-state');
-      if (emptyHeading) emptyHeading.style.display = 'none';
-      if (suggestionChips) suggestionChips.style.display = 'none';
-      updateCanvasPanelVisibility();
+      // Leave empty state (single source of authority via .empty-state class)
+      setChatEmptyState(false);
 
       // Update sidebar thread items active states
       const threadBtns = document.querySelectorAll('.thread-item');
@@ -6368,32 +6152,22 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
     }
 
     function submitMessage() {
-      const chatInput = document.getElementById('chatInput');
-      const welcomeContainer = document.getElementById('welcomeContainer');
-      const suggestionChips = document.getElementById('suggestionChipsContainer');
+      const chatInput = document.getElementById("chatInput");
       const text = chatInput.value.trim();
-      
+
       if (!text) return;
 
-      document.getElementById('sendButton').classList.remove('has-text');
-      document.getElementById('sendButton').title = 'Voice input';
+      document.getElementById("sendButton").classList.remove("has-text");
+      document.getElementById("sendButton").title = "Voice input";
 
-      // Remove empty state on first message
-      const chatArea = document.getElementById('chatArea');
-      const emptyHeading = document.getElementById('emptyStateHeading');
-      chatArea.classList.remove('empty-state');
-      if (emptyHeading) emptyHeading.style.display = 'none';
-      if (suggestionChips) suggestionChips.style.display = 'none';
-      updateCanvasPanelVisibility();
+      // Leave empty state (single source of authority via .empty-state class)
+      setChatEmptyState(false);
 
-      if (welcomeContainer.style.display !== 'none') {
-        welcomeContainer.style.display = 'none';
-        suggestionChips.style.display = 'none';
-        const chatMessages = document.getElementById('chatMessages');
-        chatMessages.innerHTML = ''; // Clear welcome cards
-      }
+      const chatMessages = document.getElementById("chatMessages");
+      chatMessages.innerHTML = ""; // Clear welcome cards
 
-      appendMessage('User', 'MA', text, 'user');
+      appendMessage("User", "MA", text, "user");
+      chatInput.value = "";
       chatInput.value = '';
 
       // Mock streaming response
@@ -6487,24 +6261,35 @@ This is a local spec generated by Ask Dexter. Highlight any text inside this edi
       }, 200);
     }
 
+    // Single source of authority for the empty/active chat state.
+    // Toggles the .empty-state class on .chat-area (drives greeting + composer centering via CSS)
+    // and shows/hides the welcome + suggestion chips + greeting trio.
+    function setChatEmptyState(isEmpty) {
+      const chatArea = document.getElementById("chatArea");
+      const chatMessages = document.getElementById("chatMessages");
+      const welcome = document.getElementById("welcomeContainer");
+      const suggestionChips = document.getElementById("suggestionChipsContainer");
+
+      chatArea.classList.toggle("empty-state", isEmpty);
+      if (welcome) welcome.style.display = isEmpty ? "flex" : "none";
+      if (suggestionChips) suggestionChips.style.display = isEmpty ? "flex" : "none";
+
+      // When entering empty state, reset messages to just the welcome card.
+      if (isEmpty && welcome && chatMessages) {
+        chatMessages.innerHTML = "";
+        chatMessages.appendChild(welcome);
+      }
+
+      updateCanvasPanelVisibility();
+    }
+
     // Start a new chat session
     function startNewChat() {
-      switchTab('view-chat');
-      const chatArea = document.getElementById('chatArea');
-      const chatMessages = document.getElementById('chatMessages');
-      const welcome = document.getElementById('welcomeContainer');
-      const suggestionChips = document.getElementById('suggestionChipsContainer');
-      const emptyHeading = document.getElementById('emptyStateHeading');
-
-      chatArea.classList.add('empty-state');
-      chatMessages.innerHTML = '';
-      chatMessages.appendChild(welcome);
-      welcome.style.display = 'flex';
-      suggestionChips.style.display = 'flex';
-      if (emptyHeading) emptyHeading.style.display = 'block';
-      document.getElementById('chatInput').value = '';
-      document.getElementById('chatHeaderTitle').innerText = 'New Chat Session';
-      updateCanvasPanelVisibility();
+      switchTab("view-chat");
+      // Enter empty state (single source of authority via .empty-state class)
+      setChatEmptyState(true);
+      document.getElementById("chatInput").value = "";
+      document.getElementById("chatHeaderTitle").innerText = "New Chat Session";
     }
 
     // Editable chat title — save on blur, prevent Enter newline
