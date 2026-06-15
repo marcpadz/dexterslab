@@ -1,0 +1,1 @@
+{"nodes": [{"id": "routes__layout_ssr", "label": "ssr", "file_type": "code", "source_file": "src/routes/+layout.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "Tauri requires SPA mode (ssr = false) because it lacks a Node.js server for SSR."}], "edges": [], "hyperedges": []}

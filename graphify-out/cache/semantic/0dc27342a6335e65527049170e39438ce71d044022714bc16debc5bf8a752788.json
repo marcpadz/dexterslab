@@ -1,0 +1,1 @@
+{"nodes": [{"id": "ipc_events_listentoevent", "label": "listenToEvent IPC Event Listener", "file_type": "code", "source_file": "src/lib/ipc/events.ts", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [], "hyperedges": []}

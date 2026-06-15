@@ -1,0 +1,467 @@
+{
+  "/Users/marcadrian/Workspace/Dev/dexterslab/.od-skills/web-prototype-4ab6e4cb5f/open-design.json": {
+    "mtime": 1781175429.0,
+    "ast_hash": "52c66d7ac6538f69bf84314ee3cce98d",
+    "semantic_hash": "52c66d7ac6538f69bf84314ee3cce98d"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/.vscode/extensions.json": {
+    "mtime": 1781323959.8584366,
+    "ast_hash": "66bc4d2caa831e7f64813c7fb1715f8a",
+    "semantic_hash": "66bc4d2caa831e7f64813c7fb1715f8a"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/.vscode/settings.json": {
+    "mtime": 1781323959.8585467,
+    "ast_hash": "01cd72541f9011df8d2361cbb382a230",
+    "semantic_hash": "01cd72541f9011df8d2361cbb382a230"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/package.json": {
+    "mtime": 1781340209.5463524,
+    "ast_hash": "63d466e1e6f9ddd96d05cc6fa79fee8f",
+    "semantic_hash": "63d466e1e6f9ddd96d05cc6fa79fee8f"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/build.rs": {
+    "mtime": 1781323959.8486125,
+    "ast_hash": "1be34a5c61c2c35365de3dab14298f0b",
+    "semantic_hash": "1be34a5c61c2c35365de3dab14298f0b"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/capabilities/default.json": {
+    "mtime": 1781323959.8488119,
+    "ast_hash": "d2b1ea61ac2075eb0d44587bf81ee127",
+    "semantic_hash": "d2b1ea61ac2075eb0d44587bf81ee127"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/gen/schemas/acl-manifests.json": {
+    "mtime": 1781324045.6970036,
+    "ast_hash": "4ddc20785dbed79e08b9b40e4cb20084",
+    "semantic_hash": "4ddc20785dbed79e08b9b40e4cb20084"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/gen/schemas/capabilities.json": {
+    "mtime": 1781324045.7044826,
+    "ast_hash": "b4b4509fac6d93c938aeea37674d7c0e",
+    "semantic_hash": "b4b4509fac6d93c938aeea37674d7c0e"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/gen/schemas/desktop-schema.json": {
+    "mtime": 1781324045.703434,
+    "ast_hash": "76556e1cac5fd616756034d0ab662f7e",
+    "semantic_hash": "76556e1cac5fd616756034d0ab662f7e"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/gen/schemas/macOS-schema.json": {
+    "mtime": 1781324045.703434,
+    "ast_hash": "76556e1cac5fd616756034d0ab662f7e",
+    "semantic_hash": "76556e1cac5fd616756034d0ab662f7e"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/src/db.rs": {
+    "mtime": 1781324021.5028214,
+    "ast_hash": "be523f720ecd37f1c9fb549fdd45af95",
+    "semantic_hash": "be523f720ecd37f1c9fb549fdd45af95"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/src/entitlements.rs": {
+    "mtime": 1781324059.9604952,
+    "ast_hash": "23ec0763aa1f9826b3125b898c0a0bb0",
+    "semantic_hash": "23ec0763aa1f9826b3125b898c0a0bb0"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/src/lib.rs": {
+    "mtime": 1781324041.719024,
+    "ast_hash": "71176598b0d1db1ab959f29910176777",
+    "semantic_hash": "71176598b0d1db1ab959f29910176777"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/src/main.rs": {
+    "mtime": 1781323959.8581612,
+    "ast_hash": "e62519ab35125067c0baaa456a606e82",
+    "semantic_hash": "e62519ab35125067c0baaa456a606e82"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/src/workspace.rs": {
+    "mtime": 1781324032.91866,
+    "ast_hash": "2d72aed8e3326c7330c7e883028eb733",
+    "semantic_hash": "2d72aed8e3326c7330c7e883028eb733"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/tauri.conf.json": {
+    "mtime": 1781339693.7481601,
+    "ast_hash": "3e23522c311af333424a54bfe1c835f3",
+    "semantic_hash": "3e23522c311af333424a54bfe1c835f3"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/shell/AppShell.svelte": {
+    "mtime": 1781340276.2488453,
+    "ast_hash": "e68dac25d65de73b8f322bc78fceb3c7",
+    "semantic_hash": "e68dac25d65de73b8f322bc78fceb3c7"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/shell/Sidebar.svelte": {
+    "mtime": 1781340658.8585277,
+    "ast_hash": "06a888ebc90ea29b7d721d14d25c106f",
+    "semantic_hash": "06a888ebc90ea29b7d721d14d25c106f"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/shell/StatusBar.svelte": {
+    "mtime": 1781340656.830073,
+    "ast_hash": "4bb978244f0a476eae7b1de009f42201",
+    "semantic_hash": "4bb978244f0a476eae7b1de009f42201"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/shell/TitleBar.svelte": {
+    "mtime": 1781340654.9242008,
+    "ast_hash": "e29dbff4360866da5baa7839380a560c",
+    "semantic_hash": "e29dbff4360866da5baa7839380a560c"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/Avatar.svelte": {
+    "mtime": 1781340313.2073278,
+    "ast_hash": "1bfc0aeb2662939522f89c254d72c373",
+    "semantic_hash": "1bfc0aeb2662939522f89c254d72c373"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/Badge.svelte": {
+    "mtime": 1781340309.2840934,
+    "ast_hash": "e8b1253ec7594bafbf6fde44c7334509",
+    "semantic_hash": "e8b1253ec7594bafbf6fde44c7334509"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/Button.svelte": {
+    "mtime": 1781340284.3599436,
+    "ast_hash": "53e3360bbb62ba6204b6952768da243e",
+    "semantic_hash": "53e3360bbb62ba6204b6952768da243e"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/Dialog.svelte": {
+    "mtime": 1781340660.437079,
+    "ast_hash": "3a50a76dee2b4d23c6a04ff0ef8099bf",
+    "semantic_hash": "3a50a76dee2b4d23c6a04ff0ef8099bf"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/Dropdown.svelte": {
+    "mtime": 1781340291.5976818,
+    "ast_hash": "bcc13657f830e34d8be0f4ac128cccba",
+    "semantic_hash": "bcc13657f830e34d8be0f4ac128cccba"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/EmptyState.svelte": {
+    "mtime": 1781340311.5366952,
+    "ast_hash": "6008f8635bf2c1bbd00e78e4fcf3da8b",
+    "semantic_hash": "6008f8635bf2c1bbd00e78e4fcf3da8b"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/Input.svelte": {
+    "mtime": 1781340286.5231543,
+    "ast_hash": "e70e8d29a2a9e362d672ef4d489e41f4",
+    "semantic_hash": "e70e8d29a2a9e362d672ef4d489e41f4"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/ScrollArea.svelte": {
+    "mtime": 1781340307.6718726,
+    "ast_hash": "2ac865604fd0cc15b396188bb42e4c65",
+    "semantic_hash": "2ac865604fd0cc15b396188bb42e4c65"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/Separator.svelte": {
+    "mtime": 1781340303.8046713,
+    "ast_hash": "cbb7f41e83d60a6918372dfa0f1d953e",
+    "semantic_hash": "cbb7f41e83d60a6918372dfa0f1d953e"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/Skeleton.svelte": {
+    "mtime": 1781340305.5387437,
+    "ast_hash": "7310810e8df256c688b414e390a21fda",
+    "semantic_hash": "7310810e8df256c688b414e390a21fda"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/Tabs.svelte": {
+    "mtime": 1781340301.9978333,
+    "ast_hash": "5100f9437eccd5cb6ae7b4baab1d539a",
+    "semantic_hash": "5100f9437eccd5cb6ae7b4baab1d539a"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/Toast.svelte": {
+    "mtime": 1781340663.602505,
+    "ast_hash": "d5d8432649010b9a873de82eb548bf44",
+    "semantic_hash": "d5d8432649010b9a873de82eb548bf44"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/components/ui/Tooltip.svelte": {
+    "mtime": 1781340299.9527652,
+    "ast_hash": "50330dcaa5905a2255e534fa8616315f",
+    "semantic_hash": "50330dcaa5905a2255e534fa8616315f"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/ipc/chat.ts": {
+    "mtime": 1781340334.8288152,
+    "ast_hash": "1fa0b675f775c1839317e8c6decf9058",
+    "semantic_hash": "1fa0b675f775c1839317e8c6decf9058"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/ipc/client.ts": {
+    "mtime": 1781340333.1366348,
+    "ast_hash": "c9a410b95ae4d110506767386f235ada",
+    "semantic_hash": "c9a410b95ae4d110506767386f235ada"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/ipc/conversations.ts": {
+    "mtime": 1781340336.3013124,
+    "ast_hash": "2faa6b2db21aabae332f5832463f083d",
+    "semantic_hash": "2faa6b2db21aabae332f5832463f083d"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/ipc/entitlements.ts": {
+    "mtime": 1781340339.8177261,
+    "ast_hash": "ec9bc5e08953f03389f2b968531e13d8",
+    "semantic_hash": "ec9bc5e08953f03389f2b968531e13d8"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/ipc/events.ts": {
+    "mtime": 1781340341.532491,
+    "ast_hash": "709869337e8ff823445e2f0996213315",
+    "semantic_hash": "709869337e8ff823445e2f0996213315"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/ipc/settings.ts": {
+    "mtime": 1781340337.8891082,
+    "ast_hash": "9ac33f691d3684755e7c1aa6c6bc8745",
+    "semantic_hash": "9ac33f691d3684755e7c1aa6c6bc8745"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/stores/auth.svelte.ts": {
+    "mtime": 1781340316.2937288,
+    "ast_hash": "bb6feab947443385cf8cf2c237eaa60f",
+    "semantic_hash": "bb6feab947443385cf8cf2c237eaa60f"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/stores/conversations.svelte.ts": {
+    "mtime": 1781340320.368582,
+    "ast_hash": "1020c69d1975bb395130408b14286302",
+    "semantic_hash": "1020c69d1975bb395130408b14286302"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/stores/models.svelte.ts": {
+    "mtime": 1781340322.0563526,
+    "ast_hash": "23532a6f406222c6612c70a536a1b3c9",
+    "semantic_hash": "23532a6f406222c6612c70a536a1b3c9"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/stores/settings.svelte.ts": {
+    "mtime": 1781340324.4608207,
+    "ast_hash": "fed2b2f800c87205e8f3f3d901c9c4d2",
+    "semantic_hash": "fed2b2f800c87205e8f3f3d901c9c4d2"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/stores/sidecar.svelte.ts": {
+    "mtime": 1781340325.8914661,
+    "ast_hash": "239250cd9710ab3114d141e5ef94c1d3",
+    "semantic_hash": "239250cd9710ab3114d141e5ef94c1d3"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/types/index.ts": {
+    "mtime": 1781340318.724012,
+    "ast_hash": "575644aa80ee78816bf82405f7758837",
+    "semantic_hash": "575644aa80ee78816bf82405f7758837"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/utils/shortcuts.ts": {
+    "mtime": 1781340345.9494824,
+    "ast_hash": "cde259e6124b77377d407f6d5123942a",
+    "semantic_hash": "cde259e6124b77377d407f6d5123942a"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/lib/utils/toast.svelte.ts": {
+    "mtime": 1781340293.6230505,
+    "ast_hash": "993219fab998cb41d687e3e3ab098529",
+    "semantic_hash": "993219fab998cb41d687e3e3ab098529"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/routes/+layout.svelte": {
+    "mtime": 1781340671.518471,
+    "ast_hash": "9876d9657c099b6c03297ab23dff7c4c",
+    "semantic_hash": "9876d9657c099b6c03297ab23dff7c4c"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/routes/+layout.ts": {
+    "mtime": 1781323959.8591506,
+    "ast_hash": "6fcc01a9e86b5ac2814ef7b2e6831657",
+    "semantic_hash": "6fcc01a9e86b5ac2814ef7b2e6831657"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/routes/+page.svelte": {
+    "mtime": 1781340675.1336844,
+    "ast_hash": "6a35bbfd164cd4414687f87f432c2235",
+    "semantic_hash": "6a35bbfd164cd4414687f87f432c2235"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/routes/graph/+page.svelte": {
+    "mtime": 1781340681.693397,
+    "ast_hash": "9e0132328e1157be92a74d2b16291b8c",
+    "semantic_hash": "9e0132328e1157be92a74d2b16291b8c"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/routes/knowledge/+page.svelte": {
+    "mtime": 1781340677.9678314,
+    "ast_hash": "eafc6b155e66a9469caca6b3964cba7c",
+    "semantic_hash": "eafc6b155e66a9469caca6b3964cba7c"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/routes/mcp/+page.svelte": {
+    "mtime": 1781340688.356989,
+    "ast_hash": "1358bd0f664b92dc64ab12fb2668216c",
+    "semantic_hash": "1358bd0f664b92dc64ab12fb2668216c"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/routes/models/+page.svelte": {
+    "mtime": 1781340691.6394608,
+    "ast_hash": "4cc64d956f92f7733dfb3c9eace5ec70",
+    "semantic_hash": "4cc64d956f92f7733dfb3c9eace5ec70"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/routes/settings/+page.svelte": {
+    "mtime": 1781340694.2432637,
+    "ast_hash": "cbd0d64973f58a65639b0e39947db353",
+    "semantic_hash": "cbd0d64973f58a65639b0e39947db353"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/routes/skills/+page.svelte": {
+    "mtime": 1781340685.2089186,
+    "ast_hash": "fcfd67fa1b34ed7b12c8432519411cfb",
+    "semantic_hash": "fcfd67fa1b34ed7b12c8432519411cfb"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/routes/subscription/+page.svelte": {
+    "mtime": 1781340697.4097571,
+    "ast_hash": "c4d6fe8952da9a83dfafccff862faac5",
+    "semantic_hash": "c4d6fe8952da9a83dfafccff862faac5"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/svelte.config.js": {
+    "mtime": 1781323959.8594048,
+    "ast_hash": "fae3b4234d5404c4d196bf6cf09d951a",
+    "semantic_hash": "fae3b4234d5404c4d196bf6cf09d951a"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/tsconfig.json": {
+    "mtime": 1781323959.8594959,
+    "ast_hash": "415e23230fd503b970a67a0ebcc0cfee",
+    "semantic_hash": "415e23230fd503b970a67a0ebcc0cfee"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/vite.config.js": {
+    "mtime": 1781327911.9116306,
+    "ast_hash": "236a6e200f0ace8bbbb533c3d158b60f",
+    "semantic_hash": "236a6e200f0ace8bbbb533c3d158b60f"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/.od-skills/agent-browser-ff76ddd73c/SKILL.md": {
+    "mtime": 1781175429.0,
+    "ast_hash": "ad54f0658327942d80a10b0822864e9a",
+    "semantic_hash": "ad54f0658327942d80a10b0822864e9a"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/.od-skills/creative-director-67d5c6e414/SKILL.md": {
+    "mtime": 1781175429.0,
+    "ast_hash": "6243cc2a0d69c5c01c6e995af33209db",
+    "semantic_hash": "6243cc2a0d69c5c01c6e995af33209db"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/.od-skills/impeccable-design-polish-6b3941db75/SKILL.md": {
+    "mtime": 1781175429.0,
+    "ast_hash": "2b72d9d85898ad71d0751485ea82ba26",
+    "semantic_hash": "2b72d9d85898ad71d0751485ea82ba26"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/.od-skills/web-prototype-4ab6e4cb5f/SKILL.md": {
+    "mtime": 1781175429.0,
+    "ast_hash": "16c786337dbf32f76c2d7494433e1240",
+    "semantic_hash": "16c786337dbf32f76c2d7494433e1240"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/.od-skills/web-prototype-4ab6e4cb5f/assets/template.html": {
+    "mtime": 1781175429.0,
+    "ast_hash": "cf3c42f3762f84d07c55f5d8bac2c15c",
+    "semantic_hash": "cf3c42f3762f84d07c55f5d8bac2c15c"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/.od-skills/web-prototype-4ab6e4cb5f/example.html": {
+    "mtime": 1781175429.0,
+    "ast_hash": "66d212e7904786f439d5acd3ee802015",
+    "semantic_hash": "66d212e7904786f439d5acd3ee802015"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/.od-skills/web-prototype-4ab6e4cb5f/references/checklist.md": {
+    "mtime": 1781175429.0,
+    "ast_hash": "60afa910de58fd0b4a14edb01d076c5e",
+    "semantic_hash": "60afa910de58fd0b4a14edb01d076c5e"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/.od-skills/web-prototype-4ab6e4cb5f/references/layouts.md": {
+    "mtime": 1781175429.0,
+    "ast_hash": "ae64298fd39a7040644945c904c6fc98",
+    "semantic_hash": "ae64298fd39a7040644945c904c6fc98"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/README.md": {
+    "mtime": 1781323959.8586624,
+    "ast_hash": "2787283facf1123fe6c06de5e0de8013",
+    "semantic_hash": "2787283facf1123fe6c06de5e0de8013"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/porting-specs/desktop_adaptation_audit.md": {
+    "mtime": 1781078913.28,
+    "ast_hash": "57e8de4439279b14df999a8ba6a48aad",
+    "semantic_hash": "57e8de4439279b14df999a8ba6a48aad"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/porting-specs/frontend_design.md": {
+    "mtime": 1781067096.1299999,
+    "ast_hash": "57cd08c81e254d90ff269778c67fbe30",
+    "semantic_hash": "57cd08c81e254d90ff269778c67fbe30"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/porting-specs/system_design.md": {
+    "mtime": 1781066837.25,
+    "ast_hash": "c32e4788030a8071a269cc2095b070e5",
+    "semantic_hash": "c32e4788030a8071a269cc2095b070e5"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/porting-specs/technical_specification.md": {
+    "mtime": 1781067156.02,
+    "ast_hash": "d63a357809d53285e9f529170811d276",
+    "semantic_hash": "d63a357809d53285e9f529170811d276"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/porting-specs/walkthrough.md": {
+    "mtime": 1781054346.49,
+    "ast_hash": "65a4489f6f3059b088ca16a5a03dc639",
+    "semantic_hash": "65a4489f6f3059b088ca16a5a03dc639"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src/app.html": {
+    "mtime": 1781340231.9298909,
+    "ast_hash": "f410dd28e2667290abc3f21b86590c1d",
+    "semantic_hash": "f410dd28e2667290abc3f21b86590c1d"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/128x128.png": {
+    "mtime": 1781323959.8490877,
+    "ast_hash": "fdd248e915476e6212afcb096c330992",
+    "semantic_hash": "fdd248e915476e6212afcb096c330992"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/128x128@2x.png": {
+    "mtime": 1781323959.8494904,
+    "ast_hash": "fd32cf41af4c52d279b92e9c61676130",
+    "semantic_hash": "fd32cf41af4c52d279b92e9c61676130"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/32x32.png": {
+    "mtime": 1781323959.8497393,
+    "ast_hash": "1344a8f2569a67c695807140fb49cf10",
+    "semantic_hash": "1344a8f2569a67c695807140fb49cf10"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/Square107x107Logo.png": {
+    "mtime": 1781323959.8500624,
+    "ast_hash": "24754965fb63f23a0fad45db0ef2554b",
+    "semantic_hash": "24754965fb63f23a0fad45db0ef2554b"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/Square142x142Logo.png": {
+    "mtime": 1781323959.850298,
+    "ast_hash": "55d92879c6bd61fc7e79a84e1dcc51f6",
+    "semantic_hash": "55d92879c6bd61fc7e79a84e1dcc51f6"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/Square150x150Logo.png": {
+    "mtime": 1781323959.8539727,
+    "ast_hash": "6e41a89b0a2b484f3e7f1b3a5db65730",
+    "semantic_hash": "6e41a89b0a2b484f3e7f1b3a5db65730"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/Square284x284Logo.png": {
+    "mtime": 1781323959.8542638,
+    "ast_hash": "b5f57838809a4d93eed8ef656ce7c2c4",
+    "semantic_hash": "b5f57838809a4d93eed8ef656ce7c2c4"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/Square30x30Logo.png": {
+    "mtime": 1781323959.854388,
+    "ast_hash": "7a18f38b895070303fda351bd8ae757d",
+    "semantic_hash": "7a18f38b895070303fda351bd8ae757d"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/Square310x310Logo.png": {
+    "mtime": 1781323959.8546758,
+    "ast_hash": "eeabbd0c2b13960e089e468c20f99e51",
+    "semantic_hash": "eeabbd0c2b13960e089e468c20f99e51"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/Square44x44Logo.png": {
+    "mtime": 1781323959.8548048,
+    "ast_hash": "42c67a38757b409cec4b6eb0c25c714c",
+    "semantic_hash": "42c67a38757b409cec4b6eb0c25c714c"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/Square71x71Logo.png": {
+    "mtime": 1781323959.8549726,
+    "ast_hash": "0670843e2fc39a0e53817a47b2b3399d",
+    "semantic_hash": "0670843e2fc39a0e53817a47b2b3399d"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/Square89x89Logo.png": {
+    "mtime": 1781323959.8551,
+    "ast_hash": "2bfa099bf584686f0dd98cfafb10bda3",
+    "semantic_hash": "2bfa099bf584686f0dd98cfafb10bda3"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/StoreLogo.png": {
+    "mtime": 1781323959.8552303,
+    "ast_hash": "02859e2326344ae7c9559f1af0abba34",
+    "semantic_hash": "02859e2326344ae7c9559f1af0abba34"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/src-tauri/icons/icon.png": {
+    "mtime": 1781323959.8574858,
+    "ast_hash": "3fa4420986811b429d7f1654da77ac3b",
+    "semantic_hash": "3fa4420986811b429d7f1654da77ac3b"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/static/favicon.png": {
+    "mtime": 1781323959.8599262,
+    "ast_hash": "3a387408ecc6cc283f724b39ca5fffb4",
+    "semantic_hash": "3a387408ecc6cc283f724b39ca5fffb4"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/static/svelte.svg": {
+    "mtime": 1781323959.8600368,
+    "ast_hash": "bf6f61806de2953fe8dfce3cf8040ec3",
+    "semantic_hash": "bf6f61806de2953fe8dfce3cf8040ec3"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/static/tauri.svg": {
+    "mtime": 1781323959.8601549,
+    "ast_hash": "f49b888a6830a38f02ffeb65891186b1",
+    "semantic_hash": "f49b888a6830a38f02ffeb65891186b1"
+  },
+  "/Users/marcadrian/Workspace/Dev/dexterslab/static/vite.svg": {
+    "mtime": 1781323959.859805,
+    "ast_hash": "8e3a10e157f75ada21ab742c022d5430",
+    "semantic_hash": "8e3a10e157f75ada21ab742c022d5430"
+  }
+}
