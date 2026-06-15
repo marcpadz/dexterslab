@@ -420,6 +420,25 @@ The top-level tab buttons are housed in a frosted pill container (`.sidebar-tabs
   `path: d="M6 12h4m-2-2v4"`, `d="M2 8a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v5a7 7 0 0 1-7 7H9a7 7 0 0 1-7-7V8z"`
   `circles: cx="17" cy="11" r="1" fill="currentColor"`, `cx="19" cy="13" r="1" fill="currentColor"`
 
+### 4.1.1 Collapsed Tab Cycler Behavior
+
+When the sidebar is collapsed to its `56px` icon rail, the 5-tab pill collapses into a **single-tab cycler**. This is a deliberate interaction pattern that preserves all five navigation contexts within the constrained collapsed width.
+
+**Visual State (Collapsed):**
+- Only **one tab icon** is visible at a time — the currently active tab's icon.
+- All inactive `.tab-item` buttons are hidden via `display: none` (`.sidebar.collapsed .tab-item { display: none; }`), with the active tab re-shown (`.sidebar.collapsed .tab-item.active { display: flex; }`).
+- The sub-navigation list (`.sidebar-nav`) displays **only icons** for the active tab's nav items — all `.nav-label`, `.section-label`, `.badge`, `.thread-item`, `.thread-item-wrap`, `.thread-item-meta`, and `.new-chat-label` text elements are hidden.
+
+**Interaction (Click to Cycle):**
+- Clicking the single visible tab icon advances to the **next tab** in fixed sequence and wraps around:
+  ```
+  Chat → Agent → Notes → Work Suite → Playground → Chat → ...
+  ```
+- The `handleSidebarTabClick(tabName)` function detects the collapsed state and computes the next tab via modulo arithmetic: `(currentIndex + 1) % tabOrder.length`.
+- `switchSidebarTab()` then rebuilds the sub-navigation list with the next tab's nav items, and CSS automatically hides their labels/badges in collapsed state.
+
+**Rationale:** Rather than shrinking 5 icons into an unreadable rail, the cycler keeps one large, legible icon as the focal point and lets the user step through the sequence with repeated clicks. The single icon + its nav icons below form a complete, scannable navigation context for the active tab.
+
 ### 4.2 Tab Navigation Map
 
 Selecting a top-level tab populates the sidebar's sub-navigation area (`.sidebar-nav`) with contextual routes that map directly to physical layout views:
@@ -479,7 +498,7 @@ Each thread card is rendered inside a `.thread-item-wrap` container containing:
 The footer container (`.sidebar-bottom-bar`) hosts utility controls:
 - **Theme Toggle (`.sidebar-theme-toggle`)**: An iOS-style toggle track containing moon and sun icons. Sliding the track toggle triggers `toggleTheme()` to update `[data-theme="light/dark"]`.
 - **User Profile (`.sidebar-avatar`)**: Circular avatar showing user initials (e.g. `MA`). Clicking this redirects to User Account/Subscription settings.
-- **Sidebar Chevron Button (`.sidebar-icon-btn`)**: A trailing chevron button that collapses or expands the sidebar. Collapsing changes the sidebar width to `56px` and hides all label text.
+- **Sidebar Chevron Button (`.sidebar-icon-btn`)**: A trailing chevron button that collapses or expands the sidebar. Collapsing changes the sidebar width to `56px`, hides all label text, and activates the tab cycler (see §4.1.1).
 
 
 ---

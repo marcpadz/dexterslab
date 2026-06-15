@@ -914,7 +914,9 @@
     .sidebar.collapsed .section-label,
     .sidebar.collapsed .thread-item,
     .sidebar.collapsed .thread-item-wrap,
-    .sidebar.collapsed .new-chat-label {
+    .sidebar.collapsed .new-chat-label,
+    .sidebar.collapsed .badge,
+    .sidebar.collapsed .thread-item-meta {
       display: none;
     }
 
@@ -924,8 +926,13 @@
       margin: 8px 4px 4px;
     }
 
+    /* Collapsed tab cycler: show only the active tab icon */
     .sidebar.collapsed .tab-item {
       padding: 8px;
+      display: none;
+    }
+    .sidebar.collapsed .tab-item.active {
+      display: flex;
     }
 
     .sidebar.collapsed .nav-item-sub {

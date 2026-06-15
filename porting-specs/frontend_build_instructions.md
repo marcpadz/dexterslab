@@ -160,6 +160,7 @@ All styles must reference the following CSS custom properties defined in `index.
   3. **Notes**: Dog-eared document icon. Sub-navigation: Recent Notes, All Notes, Trash.
   4. **Work**: Desktop workstation icon. Sub-navigation: Email, Calendar, Tasks.
   5. **Playground**: Gamepad icon. Sub-navigation: Tamagotchi.
+* **Collapsed Tab Cycler**: When the sidebar is collapsed to `56px`, the 5-tab pill collapses into a single-tab **cycler**. Only the currently active tab icon is displayed (`display: none` on inactive `.tab-item` buttons). Clicking the visible icon advances to the next tab in fixed sequence — `Chat → Agent → Notes → Work → Playground → Chat → ...` — and the sub-navigation list rebuilds with that tab's icon-only nav items (all labels, badges, and counters hidden). The `handleSidebarTabClick()` function detects collapsed state and computes the next tab via `(currentIndex + 1) % tabOrder.length`. See `frontend_design.md` §4.1.1 for full spec.
 * **Contextual menus**: Right-clicking thread list elements opens custom context overlay with Select, Pin, Move to Project, and Delete.
 * **Bottom Controls**: Theme toggle slider track, Chevron collapse button, and settings/profile triggers.
 
