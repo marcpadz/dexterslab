@@ -990,7 +990,7 @@
       display: none;
     }
     .chat-area.empty-state .composer {
-      padding: 0;
+      padding: 96px 0 var(--space-4);
       margin: 0 auto;
       max-width: 600px;
       width: 100%;
@@ -1388,6 +1388,22 @@
       height: 80px;
       pointer-events: none;
       filter: drop-shadow(0 12px 22px rgba(15,23,42,0.16));
+    }
+
+    /* Empty state: mascot inside composer (centered), chips float above like chat bubbles */
+    .chat-area.empty-state .composer-mascot {
+      bottom: auto;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .chat-area.empty-state .suggestion-chips {
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%);
+      margin-bottom: 0;
+      z-index: 21;
     }
     .mascot-body { transform-origin: center bottom; }
     .composer-mascot .blink { animation: mascotBlink 4s ease-in-out infinite; }
@@ -3534,6 +3550,13 @@
 
             <div class="composer">
 
+              <div class="suggestion-chips" id="suggestionChipsContainer">
+                <button class="chip" onclick="selectChip(this.dataset.text)" data-text="Explain my workspace">Explain my workspace</button>
+                <button class="chip" onclick="selectChip(this.dataset.text)" data-text="Build a React data table">Build a React data table</button>
+                <button class="chip" onclick="selectChip(this.dataset.text)" data-text="Run a local inference">Run a local inference</button>
+                <button class="chip" onclick="selectChip(this.dataset.text)" data-text="Help me write a blog post">Help me write a blog post</button>
+              </div>
+
               <svg class="composer-mascot" aria-hidden="true" viewBox="0 0 200 200">
                 <ellipse cx="100" cy="165" rx="35" ry="6" fill="#0f172a" class="shadow-anim" opacity="0.15"></ellipse>
                 <g class="mascot-body">
@@ -3573,13 +3596,6 @@
                   </g>
                 </g>
               </svg>
-
-              <div class="suggestion-chips" id="suggestionChipsContainer">
-                <button class="chip" onclick="selectChip(this.dataset.text)" data-text="Explain my workspace">Explain my workspace</button>
-                <button class="chip" onclick="selectChip(this.dataset.text)" data-text="Build a React data table">Build a React data table</button>
-                <button class="chip" onclick="selectChip(this.dataset.text)" data-text="Run a local inference">Run a local inference</button>
-                <button class="chip" onclick="selectChip(this.dataset.text)" data-text="Help me write a blog post">Help me write a blog post</button>
-              </div>
 
               <div class="composer-container">
                 <div class="composer-glow"></div>
