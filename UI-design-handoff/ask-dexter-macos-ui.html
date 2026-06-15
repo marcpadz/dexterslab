@@ -1099,35 +1099,25 @@
       max-width: 600px;
       width: 100%;
     }
+    .chat-area.empty-state .composer-mascot {
+      display: none;
+    }
     .chat-area.empty-state .composer-footer {
       display: none;
     }
 
-    /* Greeting + mascot inside the composer (new chat / empty state) */
+    /* Greeting inside the composer (new chat / empty state) */
     .composer-greeting {
       display: none;
     }
     .chat-area.empty-state .composer-greeting {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-3);
-      padding: var(--space-2) var(--space-3) var(--space-4);
-    }
-    /* When nested in the composer-greeting, the mascot is a flex child (not absolutely positioned) */
-    .composer-greeting .composer-mascot {
-      position: static;
-      width: 56px;
-      height: 56px;
-      flex-shrink: 0;
-      bottom: auto;
-      left: auto;
-      z-index: auto;
-      filter: drop-shadow(0 4px 10px rgba(15,23,42,0.14));
+      display: block;
+      text-align: center;
+      padding: var(--space-2) var(--space-3) var(--space-3);
     }
 
     .empty-state-heading {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 600;
       color: var(--text-primary);
       margin: 0;
@@ -3790,46 +3780,47 @@
 
             <div class="composer">
 
-              <div class="composer-greeting">
-                <svg class="composer-mascot" aria-hidden="true" viewBox="0 0 200 200">
-                  <ellipse cx="100" cy="165" rx="35" ry="6" fill="#0f172a" class="shadow-anim" opacity="0.15"></ellipse>
-                  <g class="mascot-body">
-                    <line x1="80" y1="130" x2="80" y2="155" stroke="#3B82F6" stroke-width="6" stroke-linecap="round"></line>
-                    <line x1="120" y1="130" x2="120" y2="155" stroke="#3B82F6" stroke-width="6" stroke-linecap="round"></line>
-                    <g class="arm-left">
-                      <line x1="60" y1="100" x2="35" y2="110" stroke="#3B82F6" stroke-width="6" stroke-linecap="round"></line>
-                    </g>
-                    <g class="arm-right">
-                      <line x1="140" y1="100" x2="165" y2="110" stroke="#3B82F6" stroke-width="6" stroke-linecap="round"></line>
-                    </g>
-                    <clipPath id="bodyClip">
-                      <rect x="60" y="60" width="80" height="80" rx="28"></rect>
-                    </clipPath>
-                    <g clip-path="url(#bodyClip)">
-                      <rect x="60" y="60" width="80" height="80" fill="#3B82F6"></rect>
-                      <rect x="60" y="60" width="80" height="10" fill="#60A5FA"></rect>
-                      <rect x="60" y="130" width="80" height="10" fill="#2563EB"></rect>
-                    </g>
-                    <line x1="90" y1="88" x2="110" y2="88" stroke="#0f172a" stroke-width="4"></line>
-                    <circle cx="76" cy="88" r="20" fill="#ffffff" fill-opacity="0.2" stroke="#4F46E5" stroke-width="6"></circle>
-                    <circle cx="124" cy="88" r="20" fill="#ffffff" fill-opacity="0.2" stroke="#4F46E5" stroke-width="6"></circle>
-                    <g class="blink">
-                      <circle cx="80" cy="88" r="6" fill="#0f172a"></circle>
-                      <circle cx="120" cy="88" r="6" fill="#0f172a"></circle>
-                      <circle cx="82" cy="85" r="2" fill="#ffffff"></circle>
-                      <circle cx="122" cy="85" r="2" fill="#ffffff"></circle>
-                    </g>
-                    <clipPath id="lensClip">
-                      <circle cx="76" cy="88" r="17"></circle>
-                    </clipPath>
-                    <g clip-path="url(#lensClip)">
-                      <g class="glare-sweep">
-                        <polygon points="76,60 84,60 74,120 66,120" fill="#ffffff" opacity="0.6"></polygon>
-                        <polygon points="88,60 91,60 81,120 78,120" fill="#ffffff" opacity="0.6"></polygon>
-                      </g>
+              <svg class="composer-mascot" aria-hidden="true" viewBox="0 0 200 200">
+                <ellipse cx="100" cy="165" rx="35" ry="6" fill="#0f172a" class="shadow-anim" opacity="0.15"></ellipse>
+                <g class="mascot-body">
+                  <line x1="80" y1="130" x2="80" y2="155" stroke="#3B82F6" stroke-width="6" stroke-linecap="round"></line>
+                  <line x1="120" y1="130" x2="120" y2="155" stroke="#3B82F6" stroke-width="6" stroke-linecap="round"></line>
+                  <g class="arm-left">
+                    <line x1="60" y1="100" x2="35" y2="110" stroke="#3B82F6" stroke-width="6" stroke-linecap="round"></line>
+                  </g>
+                  <g class="arm-right">
+                    <line x1="140" y1="100" x2="165" y2="110" stroke="#3B82F6" stroke-width="6" stroke-linecap="round"></line>
+                  </g>
+                  <clipPath id="bodyClip">
+                    <rect x="60" y="60" width="80" height="80" rx="28"></rect>
+                  </clipPath>
+                  <g clip-path="url(#bodyClip)">
+                    <rect x="60" y="60" width="80" height="80" fill="#3B82F6"></rect>
+                    <rect x="60" y="60" width="80" height="10" fill="#60A5FA"></rect>
+                    <rect x="60" y="130" width="80" height="10" fill="#2563EB"></rect>
+                  </g>
+                  <line x1="90" y1="88" x2="110" y2="88" stroke="#0f172a" stroke-width="4"></line>
+                  <circle cx="76" cy="88" r="20" fill="#ffffff" fill-opacity="0.2" stroke="#4F46E5" stroke-width="6"></circle>
+                  <circle cx="124" cy="88" r="20" fill="#ffffff" fill-opacity="0.2" stroke="#4F46E5" stroke-width="6"></circle>
+                  <g class="blink">
+                    <circle cx="80" cy="88" r="6" fill="#0f172a"></circle>
+                    <circle cx="120" cy="88" r="6" fill="#0f172a"></circle>
+                    <circle cx="82" cy="85" r="2" fill="#ffffff"></circle>
+                    <circle cx="122" cy="85" r="2" fill="#ffffff"></circle>
+                  </g>
+                  <clipPath id="lensClip">
+                    <circle cx="76" cy="88" r="17"></circle>
+                  </clipPath>
+                  <g clip-path="url(#lensClip)">
+                    <g class="glare-sweep">
+                      <polygon points="76,60 84,60 74,120 66,120" fill="#ffffff" opacity="0.6"></polygon>
+                      <polygon points="88,60 91,60 81,120 78,120" fill="#ffffff" opacity="0.6"></polygon>
                     </g>
                   </g>
-                </svg>
+                </g>
+              </svg>
+
+              <div class="composer-greeting">
                 <h1 class="empty-state-heading" id="emptyStateHeading">What can I do for you?</h1>
               </div>
 
