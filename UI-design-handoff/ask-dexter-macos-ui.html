@@ -407,7 +407,25 @@
     .sidebar.collapsed {
       width: 56px !important;
       min-width: 56px !important;
-      padding-top: 38px;
+      padding: 38px 6px 12px;
+    }
+
+    /* Sidebar islands (collapsed state only) */
+    .sidebar-island {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sidebar.collapsed .sidebar-island {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-lg);
+      flex-shrink: 0;
+    }
+    .sidebar.collapsed .sidebar-island-top {
+      /* Height adjusts to the number of nav items in the active tab */
+    }
+    .sidebar.collapsed .sidebar-island-bottom {
+      margin-top: auto;
     }
 
     /* Sidebar Tabs */
@@ -910,7 +928,15 @@
     .sidebar.collapsed .sidebar-tabs {
       padding: 8px 4px;
       gap: 1px;
-      margin: 8px 4px 4px;
+      margin: 4px;
+      background: transparent;
+    }
+
+    /* In collapsed state, the nav is inside the top island — let it take its natural height
+       so the island's height adjusts to the number of nav items. */
+    .sidebar.collapsed .sidebar-nav {
+      flex: 0 0 auto;
+      padding: 4px;
     }
 
     /* Collapsed tab cycler: show only the active tab icon */
@@ -946,6 +972,7 @@
       gap: 6px;
       padding: 10px 6px;
       height: auto;
+      border-top: none;
     }
 
     .sidebar.collapsed .sidebar-theme-toggle {
@@ -3650,75 +3677,85 @@
     <!-- 2. Sidebar -->
     <div class="sidebar-container" id="sidebarContainer">
       <aside class="sidebar" id="sidebar">
-        
-        <!-- Sidebar Brand -->
-        <div class="sidebar-brand">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-          <span>Ask Dexter</span>
+
+        <!-- Top island: brand + cycling sidebar tab + nav items -->
+        <div class="sidebar-island sidebar-island-top">
+
+          <!-- Sidebar Brand -->
+          <div class="sidebar-brand">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            <span>Ask Dexter</span>
+          </div>
+
+          <!-- Sidebar Navigation Header (5 Tabs) -->
+          <div class="sidebar-tabs">
+            <button class="tab-item active" onclick="handleSidebarTabClick('chat')" id="sidebar-tab-chat" title="Chat">
+              <span class="tab-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path><line x1="8" y1="10" x2="8.01" y2="10" stroke-linecap="round"></line><line x1="12" y1="10" x2="12.01" y2="10" stroke-linecap="round"></line><line x1="16" y1="10" x2="16.01" y2="10" stroke-linecap="round"></line></svg>
+              </span>
+            </button>
+            <button class="tab-item" onclick="handleSidebarTabClick('agent')" id="sidebar-tab-agent" title="Agent">
+              <span class="tab-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"></circle><ellipse cx="12" cy="12" rx="10" ry="3.5"></ellipse><ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(60 12 12)"></ellipse><ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(-60 12 12)"></ellipse></svg>
+              </span>
+            </button>
+            <button class="tab-item" onclick="handleSidebarTabClick('notes')" id="sidebar-tab-notes" title="Notes">
+              <span class="tab-icon">
+                <svg viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line><line x1="8" y1="16" x2="14" y2="16"></line><line x1="8" y1="8" x2="10" y2="8"></line></svg>
+              </span>
+            </button>
+            <button class="tab-item" onclick="handleSidebarTabClick('work')" id="sidebar-tab-work" title="Work Suite">
+              <span class="tab-icon">
+                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line><line x1="7" y1="8" x2="11" y2="8"></line><line x1="7" y1="11" x2="14" y2="11"></line><circle cx="17" cy="7" r="1.5" fill="none"></circle></svg>
+              </span>
+            </button>
+            <button class="tab-item" onclick="handleSidebarTabClick('playground')" id="sidebar-tab-playground" title="Playground">
+              <span class="tab-icon">
+                <svg viewBox="0 0 24 24"><path d="M6 12h4m-2-2v4"></path><circle cx="17" cy="11" r="1" fill="currentColor" stroke="none"></circle><circle cx="19" cy="13" r="1" fill="currentColor" stroke="none"></circle><path d="M2 8a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v5a7 7 0 0 1-7 7H9a7 7 0 0 1-7-7V8z"></path></svg>
+              </span>
+            </button>
+          </div>
+
+          <!-- Sidebar Navigation lists -->
+          <nav class="sidebar-nav" id="sidebarNavContent">
+            <!-- Populated dynamically by switchSidebarTab() -->
+          </nav>
+
         </div>
 
-        <!-- Sidebar Navigation Header (5 Tabs) -->
-        <div class="sidebar-tabs">
-          <button class="tab-item active" onclick="handleSidebarTabClick('chat')" id="sidebar-tab-chat" title="Chat">
-            <span class="tab-icon">
-              <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path><line x1="8" y1="10" x2="8.01" y2="10" stroke-linecap="round"></line><line x1="12" y1="10" x2="12.01" y2="10" stroke-linecap="round"></line><line x1="16" y1="10" x2="16.01" y2="10" stroke-linecap="round"></line></svg>
-            </span>
-          </button>
-          <button class="tab-item" onclick="handleSidebarTabClick('agent')" id="sidebar-tab-agent" title="Agent">
-            <span class="tab-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"></circle><ellipse cx="12" cy="12" rx="10" ry="3.5"></ellipse><ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(60 12 12)"></ellipse><ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(-60 12 12)"></ellipse></svg>
-            </span>
-          </button>
-          <button class="tab-item" onclick="handleSidebarTabClick('notes')" id="sidebar-tab-notes" title="Notes">
-            <span class="tab-icon">
-              <svg viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line><line x1="8" y1="16" x2="14" y2="16"></line><line x1="8" y1="8" x2="10" y2="8"></line></svg>
-            </span>
-          </button>
-          <button class="tab-item" onclick="handleSidebarTabClick('work')" id="sidebar-tab-work" title="Work Suite">
-            <span class="tab-icon">
-              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line><line x1="7" y1="8" x2="11" y2="8"></line><line x1="7" y1="11" x2="14" y2="11"></line><circle cx="17" cy="7" r="1.5" fill="none"></circle></svg>
-            </span>
-          </button>
-          <button class="tab-item" onclick="handleSidebarTabClick('playground')" id="sidebar-tab-playground" title="Playground">
-            <span class="tab-icon">
-              <svg viewBox="0 0 24 24"><path d="M6 12h4m-2-2v4"></path><circle cx="17" cy="11" r="1" fill="currentColor" stroke="none"></circle><circle cx="19" cy="13" r="1" fill="currentColor" stroke="none"></circle><path d="M2 8a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v5a7 7 0 0 1-7 7H9a7 7 0 0 1-7-7V8z"></path></svg>
-            </span>
-          </button>
-        </div>
+        <!-- Bottom island: search + footer (theme, avatar, collapse) -->
+        <div class="sidebar-island sidebar-island-bottom">
 
-        <!-- Sidebar Navigation lists -->
-        <nav class="sidebar-nav" id="sidebarNavContent">
-          <!-- Populated dynamically by switchSidebarTab() -->
-        </nav>
+          <!-- Sidebar Search -->
+          <div class="sidebar-search">
+            <input class="sidebar-search-input" type="text" placeholder="Search threads..." onclick="alert('Search is not supported in the HTML preview.')">
+            <span class="sidebar-search-shortcut">⌘K</span>
+            <button class="sidebar-search-icon" onclick="toggleSidebarCollapse()" title="Search">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+          </div>
 
-        <!-- Sidebar Search -->
-        <div class="sidebar-search">
-          <input class="sidebar-search-input" type="text" placeholder="Search threads..." onclick="alert('Search is not supported in the HTML preview.')">
-          <span class="sidebar-search-shortcut">⌘K</span>
-          <button class="sidebar-search-icon" onclick="toggleSidebarCollapse()" title="Search">
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          </button>
-        </div>
-
-        <!-- Sidebar Footer -->
-        <div class="sidebar-bottom-bar">
-          <div class="sidebar-theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" role="button" tabindex="0">
-            <div class="theme-toggle-track light" id="themeTrack">
-              <div class="theme-toggle-icons">
-                <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <!-- Sidebar Footer -->
+          <div class="sidebar-bottom-bar">
+            <div class="sidebar-theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" role="button" tabindex="0">
+              <div class="theme-toggle-track light" id="themeTrack">
+                <div class="theme-toggle-icons">
+                  <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                  <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </div>
+                <div class="theme-toggle-knob"></div>
               </div>
-              <div class="theme-toggle-knob"></div>
+            </div>
+
+            <div class="sidebar-avatar" title="Profile">MA</div>
+
+            <div class="sidebar-bottom-actions">
+              <button class="sidebar-icon-btn" onclick="toggleSidebarCollapse()" title="Toggle sidebar">
+                <svg class="refresh-chevron" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
             </div>
           </div>
 
-          <div class="sidebar-avatar" title="Profile">MA</div>
-
-          <div class="sidebar-bottom-actions">
-            <button class="sidebar-icon-btn" onclick="toggleSidebarCollapse()" title="Toggle sidebar">
-              <svg class="refresh-chevron" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
-            </button>
-          </div>
         </div>
 
       </aside>
